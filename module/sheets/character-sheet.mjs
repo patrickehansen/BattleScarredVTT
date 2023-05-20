@@ -1,16 +1,16 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
-
+import { PATH } from "../../config.js";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class BoilerplateActorSheet extends ActorSheet {
+export class CharacterSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["BattleScarredVTT", "sheet", "actor"],
-      template: "systems/BattleScarredVTT/templates/actor/actor-sheet.html",
+      classes: [PATH, "sheet", "actor"],
+      template: `systems/${PATH}/templates/actor/actor-sheet.html`,
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
@@ -19,7 +19,7 @@ export class BoilerplateActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/BattleScarredVTT/templates/actor/actor-${this.actor.type}-sheet.html`;
+    return `systems/${PATH}/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -68,8 +68,12 @@ export class BoilerplateActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.system.abilities)) {
-      v.label = game.i18n.localize(CONFIG.BATTLESCARRED.abilities[k]) ?? k;
+    console.log(context.system.physical);
+    for (let [k, v] of Object.entries(context.system.mental)) {
+      v.label = game.i18n.localize(CONFIG.BATTLESCARRED.mental[k]) ?? k;
+    }
+    for (let [k, v] of Object.entries(context.system.physical)) {
+      v.label = game.i18n.localize(CONFIG.BATTLESCARRED.physical[k]) ?? k;
     }
   }
 

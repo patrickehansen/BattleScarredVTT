@@ -6,51 +6,59 @@
         "health": {
           "value": 10,
           "min": 0,
-          "max": 10
+          "max": 5000
         },
-        "power": {
-          "value": 5,
+        "aether": {
+          "value": 10,
           "min": 0,
-          "max": 5
+          "max": 5000
+        },
+        "mental": {
+          "int": {
+            "value": 5
+          },
+          "res": {
+            "value": 5
+          },
+          "emp": {
+            "value": 5
+          },
+          "aet": {
+            "value": 5
+          }
+        },
+        "physical": {
+          "str": {
+            "value": 5
+          },
+          "end": {
+            "value": 5
+          },
+          "agi": {
+            "value": 5
+          },
+          "alt": {
+            "value": 5
+          },
+          "mel": {
+            "value": 5
+          },
+          "acc": {
+            "value": 5
+          }		
         },
         "biography": ""
       }
     },
     "character": {
-      "templates": ["base"],
-      "attributes": {
-        "level": {
-          "value": 1
-        }
-      },
-      "abilities": {
-        "str": {
-          "value": 10
-        },
-        "dex": {
-          "value": 10
-        },
-        "con": {
-          "value": 10
-        },
-        "int": {
-          "value": 10
-        },
-        "wis": {
-          "value": 10
-        },
-        "cha": {
-          "value": 10
-        }
-      }
+      "templates": ["base"]
     },
     "npc": {
-      "templates": ["base"],
-      "cr": 0
+      "templates": ["base"]
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "weapon", "spell"],
     "templates": {
       "base": {
         "description": ""
@@ -62,12 +70,14 @@
       "weight": 0,
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
-    "feature": {
-      "templates": ["base"]
+    "weapon": {
+      "templates": ["base"],
+      "damage": 0
     },
     "spell": {
       "templates": ["base"],
-      "spellLevel": 1
+      "spellLevel": 1,
+      "castType": "None"
     }
   }
 }

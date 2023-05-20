@@ -2,7 +2,7 @@
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class BoilerplateActor extends Actor {
+export class BattleScarredActor extends Actor {
 
   /** @override */
   prepareData() {
@@ -31,7 +31,7 @@ export class BoilerplateActor extends Actor {
   prepareDerivedData() {
     const actorData = this;
     const systemData = actorData.system;
-    const flags = actorData.flags.boilerplate || {};
+    const flags = actorData.flags.battleScarred || {};
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
@@ -48,10 +48,12 @@ export class BoilerplateActor extends Actor {
     // Make modifications to data here. For example:
     const systemData = actorData.system;
 
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
+    // // Loop through ability scores, and add their modifiers to our sheet output.
+    for (let [key, ability] of Object.entries(systemData.mental)) {
+      ability.mod = Math.ceil(ability.value);
+    }
+    for (let [key, ability] of Object.entries(systemData.physical)) {
+      ability.mod = Math.floor(ability.value);
     }
   }
 
@@ -63,7 +65,6 @@ export class BoilerplateActor extends Actor {
 
     // Make modifications to data here. For example:
     const systemData = actorData.system;
-    systemData.xp = (systemData.cr * systemData.cr) * 100;
   }
 
   /**
@@ -87,15 +88,13 @@ export class BoilerplateActor extends Actor {
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
+    if (data.mental) {
+      for (let [k, v] of Object.entries(data.mental)) {
         data[k] = foundry.utils.deepClone(v);
       }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
+      for (let [k, v] of Object.entries(data.physical)) {
+        data[k] = foundry.utils.deepClone(v);
+      }
     }
   }
 

@@ -1,22 +1,32 @@
 {
-  "BOILERPLATE.AbilityStr": "Strength",
-  "BOILERPLATE.AbilityCon": "Constitution",
-  "BOILERPLATE.AbilityDex": "Dexterity",
-  "BOILERPLATE.AbilityInt": "Intelligence",
-  "BOILERPLATE.AbilityWis": "Wisdom",
-  "BOILERPLATE.AbilityCha": "Charisma",
+  "BATTLESCARRED.AbilityMentalInt": "Intelligence",
+  "BATTLESCARRED.AbilityMentalRes": "Resilience",
+  "BATTLESCARRED.AbilityMentalEmp": "Empathy",
+  "BATTLESCARRED.AbilityMentalAet": "Aether",
 
-  "BOILERPLATE.AbilityStrAbbr": "str",
-  "BOILERPLATE.AbilityConAbbr": "con",
-  "BOILERPLATE.AbilityDexAbbr": "dex",
-  "BOILERPLATE.AbilityIntAbbr": "int",
-  "BOILERPLATE.AbilityWisAbbr": "wis",
-  "BOILERPLATE.AbilityChaAbbr": "cha",
+  "BATTLESCARRED.AbilityMentalIntAbbr": "int",
+  "BATTLESCARRED.AbilityMentalResAbbr": "res",
+  "BATTLESCARRED.AbilityMentalEmpAbbr": "emp",
+  "BATTLESCARRED.AbilityMentalAetAbbr": "aet",
 
-  "BOILERPLATE.EffectCreate": "Create Effect",
-  "BOILERPLATE.EffectToggle": "Toggle Effect",
-  "BOILERPLATE.EffectEdit": "Edit Effect",
-  "BOILERPLATE.EffectDelete": "Delete Effect",
+  "BATTLESCARRED.AbilityPhysicalStr": "Strength",
+  "BATTLESCARRED.AbilityPhysicalEnd": "Endurance",
+  "BATTLESCARRED.AbilityPhysicalAgi": "Agility",
+  "BATTLESCARRED.AbilityPhysicalAlt": "Alertness",
+  "BATTLESCARRED.AbilityPhysicalMel": "Melee",
+  "BATTLESCARRED.AbilityPhysicalAcc": "Accuracy",
 
-  "BOILERPLATE.Add": "Add"
+  "BATTLESCARRED.AbilityPhysicalStrAbbr": "str",
+  "BATTLESCARRED.AbilityPhysicalEndAbbr": "end",
+  "BATTLESCARRED.AbilityPhysicalAgiAbbr": "agi",
+  "BATTLESCARRED.AbilityPhysicalAltAbbr": "alt",
+  "BATTLESCARRED.AbilityPhysicalMelAbbr": "mel",
+  "BATTLESCARRED.AbilityPhysicalAccAbbr": "acc",
+
+  "BATTLESCARRED.EffectCreate": "Create Effect",
+  "BATTLESCARRED.EffectToggle": "Toggle Effect",
+  "BATTLESCARRED.EffectEdit": "Edit Effect",
+  "BATTLESCARRED.EffectDelete": "Delete Effect",
+
+  "BATTLESCARRED.Add": "Add"
 }
