@@ -9,7 +9,7 @@ const sass = require('gulp-sass')(require('sass'));
 
 // Small error handler helper function.
 function handleError(err) {
-  console.log(err.toString());
+  console.error(err.toString());
   this.emit('end');
 }
 
@@ -20,7 +20,6 @@ function compileScss() {
     outputStyle: 'expanded'
   };
   return gulp.src(SYSTEM_SCSS)
-    .pipe(sourcemaps.init())
     .pipe(
       sass(options)
         .on('error', handleError)
@@ -28,7 +27,6 @@ function compileScss() {
     .pipe(prefix({
       cascade: false
     }))
-    .pipe(sourcemaps.write())
     .pipe(gulp.dest("./css"))
 }
 const css = gulp.series(compileScss);

@@ -2,7 +2,7 @@
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class BattleScarredActor extends Actor {
+export class v3boilerplateActor extends Actor {
 
   /** @override */
   prepareData() {
@@ -30,7 +30,7 @@ export class BattleScarredActor extends Actor {
    */
   prepareDerivedData() {
     const actorData = this;
-    const systemData = actorData.system;
+    const systemData = actorData.system;;
     const flags = actorData.flags.battleScarred || {};
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
@@ -46,7 +46,7 @@ export class BattleScarredActor extends Actor {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
-    const systemData = actorData.system;
+    const systemData = actorData.system.abilities;
 
     // // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(systemData.mental)) {
@@ -62,9 +62,6 @@ export class BattleScarredActor extends Actor {
    */
   _prepareNpcData(actorData) {
     if (actorData.type !== 'npc') return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
   }
 
   /**
@@ -96,6 +93,7 @@ export class BattleScarredActor extends Actor {
         data[k] = foundry.utils.deepClone(v);
       }
     }
+    console.log('characterRollData', data.abilities)
   }
 
   /**

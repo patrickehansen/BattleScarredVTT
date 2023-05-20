@@ -1,24 +1,70 @@
 {
-  "name": "boilerplate",
+  "name": "battle_scarred_vtt",
   "version": "1.0.0",
-  "description": "CSS compiler for the Boilerplate system",
+  "description": "CSS compiler for the v3boilerplate system",
+  "main": "./dist/my-lib.umd.js",
+  "module": "./dist/my-lib.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.es.js",
+      "require": "./dist/my-lib.umd.js"
+    }
+  },
   "scripts": {
     "build": "gulp build",
     "compile": "gulp css",
     "watch": "gulp",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "vue": "vue-cli-service build --target lib --name MyVueComponent src/App.vue",
+    "vite:watch": "vite build --watch",
+    "vite:build": "vite build",
+    "build:all": "gulp build && vite build"
   },
   "browserslist": [
-    "last 3 versions"
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
   ],
-  "author": "John Doe",
+  "author": "Asacolips",
   "license": "MIT",
   "private": true,
+  "dependencies": {
+    "vue": "^3.2.13"
+  },
   "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "autoprefixer": "^10.4.7",
+    "core-js": "^3.8.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
-    "sass": "^1.53.0"
+    "sass": "^1.52.3",
+    "vite": "^2.9.12"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {
+      "vue/no-mutating-props": 0
+    }
   }
 }

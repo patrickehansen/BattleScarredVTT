@@ -5,7 +5,8 @@
  */
  export function onManageActiveEffect(event, owner) {
   event.preventDefault();
-  const a = event.currentTarget;
+  // Prefer currentTarget, but vue events will user target instead.
+  const a = event.currentTarget ?? event.target;
   const li = a.closest("li");
   const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
   switch ( a.dataset.action ) {
@@ -22,7 +23,7 @@
     case "delete":
       return effect.delete();
     case "toggle":
-      return effect.update({disabled: !effect.disabled});
+      return effect.update({disabled: !effect.data.disabled});
   }
 }
 
@@ -31,7 +32,7 @@
  * @param {ActiveEffect[]} effects    The array of Active Effect instances to prepare sheet data for
  * @return {object}                   Data for rendering
  */
-export function prepareActiveEffectCategories(effects) {
+export function prepareActiveEffectCategories(effects, flatten = false) {
 
     // Define effect header categories
     const categories = {
@@ -54,10 +55,15 @@ export function prepareActiveEffectCategories(effects) {
 
     // Iterate over active effects, classifying them into categories
     for ( let e of effects ) {
-      e._getSourceName(); // Trigger a lookup for the source name
-      if ( e.disabled ) categories.inactive.effects.push(e);
-      else if ( e.isTemporary ) categories.temporary.effects.push(e);
-      else categories.passive.effects.push(e);
+      const effect = flatten ? e.data.toObject(false) : e;
+      if (flatten) {
+        effect.sourceName = e.sourceName;
+        effect.duration = e.duration;
+      }
+      // Trigger a lookup for the source name
+      if ( e.data.disabled ) categories.inactive.effects.push(effect);
+      else if ( e.isTemporary ) categories.temporary.effects.push(effect);
+      else categories.passive.effects.push(effect);
     }
     return categories;
 }

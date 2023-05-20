@@ -1,12 +1,14 @@
 // Import document classes.
-import { BoilerplateActor } from "./documents/actor.mjs";
-import { BoilerplateItem } from "./documents/item.mjs";
+import { v3boilerplateActor } from "./documents/actor.mjs";
+import { v3boilerplateItem } from "./documents/item.mjs";
 // Import sheet classes.
-import { BoilerplateActorSheet } from "./sheets/actor-sheet.mjs";
-import { BoilerplateItemSheet } from "./sheets/item-sheet.mjs";
+import { v3boilerplateActorSheet } from "./sheets/actor-sheet.mjs";
+import { v3boilerplateItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { BOILERPLATE } from "./helpers/config.mjs";
+import { BATTLESCARRED } from "./helpers/config.mjs";
+// Handle Vue.
+import { v3boilerplateActorSheetVue } from "./sheets/actor-sheet.vue.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -16,36 +18,37 @@ Hooks.once('init', async function() {
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.boilerplate = {
-    BoilerplateActor,
-    BoilerplateItem,
+  game.vueBattleScarred = {
+    v3boilerplateActor,
+    v3boilerplateItem,
     rollItemMacro
   };
 
   // Add custom constants for configuration.
-  CONFIG.BOILERPLATE = BOILERPLATE;
+  CONFIG.BATTLESCARRED = BATTLESCARRED;
 
   /**
    * Set an initiative formula for the system
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
+    formula: "3d6 - @abilities.physical.agi.mod",
     decimals: 2
   };
 
   // Define custom Document classes
-  CONFIG.Actor.documentClass = BoilerplateActor;
-  CONFIG.Item.documentClass = BoilerplateItem;
+  CONFIG.Actor.documentClass = v3boilerplateActor;
+  CONFIG.Item.documentClass = v3boilerplateItem;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("boilerplate", BoilerplateActorSheet, { makeDefault: true });
+  Actors.registerSheet("vueBattleScarred", v3boilerplateActorSheet, { label: 'Handlebars', makeDefault: false });
+  Actors.registerSheet("vueBattleScarred", v3boilerplateActorSheetVue, { label: 'Vue', makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("boilerplate", BoilerplateItemSheet, { makeDefault: true });
+  Items.registerSheet("vueBattleScarred", v3boilerplateItemSheet, { makeDefault: true });
 
   // Preload Handlebars templates.
-  return preloadHandlebarsTemplates();
+  preloadHandlebarsTemplates();
 });
 
 /* -------------------------------------------- */
@@ -88,16 +91,12 @@ Hooks.once("ready", async function() {
  * @returns {Promise}
  */
 async function createItemMacro(data, slot) {
-  // First, determine if this is a valid owned item.
   if (data.type !== "Item") return;
-  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
-    return ui.notifications.warn("You can only create macro buttons for owned Items");
-  }
-  // If it is, retrieve it based on the uuid.
-  const item = await Item.fromDropData(data);
+  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
+  const item = data.data;
 
-  // Create the macro command using the uuid.
-  const command = `game.boilerplate.rollItemMacro("${data.uuid}");`;
+  // Create the macro command
+  const command = `game.v3boilerplate.rollItemMacro("${item.name}");`;
   let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
     macro = await Macro.create({
@@ -105,7 +104,7 @@ async function createItemMacro(data, slot) {
       type: "script",
       img: item.img,
       command: command,
-      flags: { "boilerplate.itemMacro": true }
+      flags: { "vueBattleScarred.itemMacro": true }
     });
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -115,23 +114,17 @@ async function createItemMacro(data, slot) {
 /**
  * Create a Macro from an Item drop.
  * Get an existing item macro if one exists, otherwise create a new one.
- * @param {string} itemUuid
+ * @param {string} itemName
+ * @return {Promise}
  */
-function rollItemMacro(itemUuid) {
-  // Reconstruct the drop data so that we can load the item.
-  const dropData = {
-    type: 'Item',
-    uuid: itemUuid
-  };
-  // Load the item from the uuid.
-  Item.fromDropData(dropData).then(item => {
-    // Determine if the item loaded and if it's an owned item.
-    if (!item || !item.parent) {
-      const itemName = item?.name ?? itemUuid;
-      return ui.notifications.warn(`Could not find item ${itemName}. You may need to delete and recreate this macro.`);
-    }
+function rollItemMacro(itemName) {
+  const speaker = ChatMessage.getSpeaker();
+  let actor;
+  if (speaker.token) actor = game.actors.tokens[speaker.token];
+  if (!actor) actor = game.actors.get(speaker.actor);
+  const item = actor ? actor.items.find(i => i.name === itemName) : null;
+  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
 
-    // Trigger the item roll
-    item.roll();
-  });
+  // Trigger the item roll
+  return item.roll();
 }

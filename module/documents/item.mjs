@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class BoilerplateItem extends Item {
+export class v3boilerplateItem extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -20,8 +20,7 @@ export class BoilerplateItem extends Item {
     // If present, return the actor's roll data.
     if ( !this.actor ) return null;
     const rollData = this.actor.getRollData();
-    // Grab the item's system data as well.
-    rollData.item = foundry.utils.deepClone(this.system);
+    rollData.item = foundry.utils.deepClone(this.data.data);
 
     return rollData;
   }
@@ -32,7 +31,7 @@ export class BoilerplateItem extends Item {
    * @private
    */
   async roll() {
-    const item = this;
+    const item = this.data;
 
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
@@ -40,12 +39,12 @@ export class BoilerplateItem extends Item {
     const label = `[${item.type}] ${item.name}`;
 
     // If there's no roll data, send a chat message.
-    if (!this.system.formula) {
+    if (!this.data.data.formula) {
       ChatMessage.create({
         speaker: speaker,
         rollMode: rollMode,
         flavor: label,
-        content: item.system.description ?? ''
+        content: item.data.description ?? ''
       });
     }
     // Otherwise, create a roll and send a chat message from it.

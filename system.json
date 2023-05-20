@@ -1,18 +1,16 @@
 {
-  "id": "BattleScarredVTT",
+  "name": "BattleScarredVTT",
   "title": "Battle Scarred",
-  "description": "The Battle Scarred system for Foundry VTT",
-  "version": "0.1.0",
-  "compatibility": {
-    "minimum": 10,
-    "verified": "10.291",
-    "maximum": 10
-  },
-  "authors": [{
-    "name": "Tiskahar"
-  }],
-  "esmodules": ["module/module.mjs"],
-  "styles": ["css/styles.css"],
+  "description": "The v3boilerplate system for FoundryVTT!",
+  "version": "1.0.0",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "9",
+  "author": "Asacolips",
+  "esmodules": ["module/v3boilerplate.mjs"],
+  "styles": [
+    "css/v3boilerplate.css",
+    "dist/styles.vue.css"
+  ],
   "scripts": [],
   "packs": [],
   "languages": [
@@ -25,10 +23,9 @@
   "gridDistance": 5,
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
+  "secondaryTokenAttribute": "aether",
   "url": "",
   "manifest": "",
   "download": "",
-  "license": "LICENSE.txt",
-  "changelog": "CHANGELOG.md"
+  "license": "LICENSE.txt"
 }

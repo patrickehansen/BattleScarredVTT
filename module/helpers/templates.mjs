@@ -7,9 +7,9 @@
   return loadTemplates([
 
     // Actor partials.
-    "systems/BattleScarredVTT/templates/actor/parts/actor-features.html",
-    "systems/BattleScarredVTT/templates/actor/parts/actor-items.html",
-    "systems/BattleScarredVTT/templates/actor/parts/actor-spells.html",
-    "systems/BattleScarredVTT/templates/actor/parts/actor-effects.html",
+    "systems/vueBattleScarred/templates/actor/parts/actor-features.html",
+    "systems/vueBattleScarred/templates/actor/parts/actor-items.html",
+    "systems/vueBattleScarred/templates/actor/parts/actor-spells.html",
+    "systems/vueBattleScarred/templates/actor/parts/actor-effects.html",
   ]);
 };

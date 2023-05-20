@@ -6,48 +6,50 @@
         "health": {
           "value": 10,
           "min": 0,
-          "max": 5000
-        },
+          "max": 10
+        },      
         "aether": {
           "value": 10,
           "min": 0,
-          "max": 5000
+          "max": 10
         },
-        "mental": {
-          "int": {
-            "value": 5
+        "biography": "",
+        "abilities": {
+          "mental": {
+            "int": {
+              "value": 5
+            },
+            "res": {
+              "value": 5
+            },
+            "emp": {
+              "value": 5
+            },
+            "aet": {
+              "value": 5
+            }
           },
-          "res": {
-            "value": 5
-          },
-          "emp": {
-            "value": 5
-          },
-          "aet": {
-            "value": 5
+          "physical": {
+            "str": {
+              "value": 5
+            },
+            "end": {
+              "value": 5
+            },
+            "agi": {
+              "value": 5
+            },
+            "alt": {
+              "value": 5
+            },
+            "mel": {
+              "value": 5
+            },
+            "acc": {
+              "value": 5
+            }		
           }
-        },
-        "physical": {
-          "str": {
-            "value": 5
-          },
-          "end": {
-            "value": 5
-          },
-          "agi": {
-            "value": 5
-          },
-          "alt": {
-            "value": 5
-          },
-          "mel": {
-            "value": 5
-          },
-          "acc": {
-            "value": 5
-          }		
-        },
-        "biography": ""
+        }
       }
     },
     "character": {
@@ -58,7 +60,7 @@
     }
   },
   "Item": {
-    "types": ["item", "weapon", "spell"],
+    "types": ["item", "feature", "spell"],
     "templates": {
       "base": {
         "description": ""
@@ -68,16 +70,14 @@
       "templates": ["base"],
       "quantity": 1,
       "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+      "formula": "3d6 + @str.mod + ceil(@lvl / 2)"
     },
-    "weapon": {
-      "templates": ["base"],
-      "damage": 0
+    "feature": {
+      "templates": ["base"]
     },
     "spell": {
       "templates": ["base"],
-      "spellLevel": 1,
-      "castType": "None"
+      "spellLevel": 1
     }
   }
 }

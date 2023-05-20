@@ -13,8 +13,7 @@
 @import 'global/flex';
 
 /* Styles limited to battle scarred sheets */
-.battleScarred {
-  @import 'components/actor';
+.battleScarred-vue {
   @import 'components/forms';
   @import 'components/resource';
   @import 'components/items';

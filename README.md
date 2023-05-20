@@ -1,43 +1,194 @@
-# Boilerplate System
+# Vue3boilerplate
 
-![Foundry v10](https://img.shields.io/badge/foundry-v10-green)
+![Foundry v9](https://img.shields.io/badge/foundry-v9-green) | ![Vue 3](https://img.shields.io/badge/vue-3-blue)
 
-This system is a boilerplate system that you can use as a starting point for building your own custom systems. It's similar to Simple World-building, but has examples of creating attributes in code rather than dynamically through the UI.
+This is a variant of the [Boilerplate system](https://gitlab.com/asacolips-projects/foundry-mods/boilerplate) that's configured to support Vue 3 for its character sheet template!
 
-## Usage
+## Install dependencies
 
-Before installing this system, you should rename any files that have `boilerplate` in their filename to use whatever machine-safe name your system needs, such as `adnd2e` if you were building a system for 2nd edition Advanced Dungeons & Dragons. In addition, you should search through the files for `boilerplate` and `Boilerplate` and do the same for those, replacing them with appropriate names for your system.
+```bash
+npm install
 
-### System Generator
+npm i -g gulp vite
+```
 
-This project is also available as generator that can be run with npm: https://www.npmjs.com/package/generator-foundry
 
-### Vue 3 Boilerplate
+## Build the scss
 
-Alternatively, there's another build of this system that supports using Vue 3 components (ES module build target) for character sheet templates.
+The base scss used by both the Handlebars and Vue sheets are compiled with gulp.
 
-Head over to the [Vue3Boilerplate System](https://gitlab.com/asacolips-projects/foundry-mods/vue3boilerplate) repo if you're interested in using Vue!
+```bash
+# Single build
+npm run build
 
-### Tutorial
+# Watch for changes
+npm run watch
+```
 
-For much more information on how to use this system as a starting point for making your own, see the [full tutorial on the Foundry Wiki](https://foundryvtt.wiki/en/development/guides/SD-tutorial)!
+## Build the Vue components
 
-## Sheet Layout
+The vue components under `src/*` can be built with Vite.
 
-This system includes a handful of helper CSS classes to help you lay out your sheets if you're not comfortable diving into CSS fully. Those are:
+```bash
+# Single build
+npm run vite:build
 
-* `flexcol`: Included by Foundry itself, this lays out the child elements of whatever element you place this on vertically.
-* `flexrow`: Included by Foundry itself, this lays out the child elements of whatever element you place this on horizontally.
-* `flex-center`: When used on something that's using flexrow or flexcol, this will center the items and text.
-* `flex-between`: When used on something that's using flexrow or flexcol, this will attempt to place space between the items. Similar to "justify" in word processors.
-* `flex-group-center`: Add a border, padding, and center all items.
-* `flex-group-left`: Add a border, padding, and left align all items.
-* `flex-group-right`: Add a border, padding, and right align all items.
-* `grid`: When combined with the `grid-Ncol` classes, this will lay out child elements in a grid.
-* `grid-Ncol`: Replace `N` with any number from 1-12, such as `grid-3col`. When combined with `grid`, this will layout child elements in a grid with a number of columns equal to the number specified.
+# Watch for changes
+npm run vite:watch
+```
 
-## Compiling the CSS
+## Vue structure.
 
-This repo includes both CSS for the theme and SCSS source files. If you're new to CSS, it's probably easier to just work in those files directly and delete the SCSS directory. If you're interested in using a CSS preprocessor to add support for nesting, variables, and more, you can run `npm install` in this directory to install the dependencies for the scss compiler. After that, just run `npm run gulp` to compile the SCSS and start a process that watches for new changes.
+### The **_src/*_** directory
 
-![image](http://mattsmith.in/images/boilerplate.png)
+The Vue components are kept in `src/*`. This is further broken up into the following structure:
+
+- `assets` - File/media assets that can be referenced by components.
+- `components` - Vue components.
+    - `index.js` - Main entrypoint used to determine which components should be exported during the compile (and made available to be imported by Foundry). Not every component needs to be listed here; you'll typically only export your main application component and a handful of utility/helper components (such as Tabs or a TinyMCE Editor).
+    - `CharacterSheet.vue` - Main component for the vue character sheet. **Must** be exported.
+    - `methods/` - Directory with exported methods that can be imported by components. For example, event handlers and text formatters that are useful in a wide number of components.
+    - `parts/` - Sub-components referenced by other components, some of which are re-usable. For example, `Tabs`, `Editor`, and so forth.
+    - `tabs/` - Content components that make up each of the tabs on the main character sheet component.
+
+## Load vue.
+
+The ES module version of Vue is stored in this repo at `module/lib/vue.esm-browser.js`. You'll typically only have to do this in character sheets or other applications utilizing Vue. To use it, you'll typically need to include the following in your file referencing it:
+
+```js
+import { createApp } from './module/lib/vue.esm-browser.js';
+```
+
+## Load your components
+
+The compiled components are in the `dist/` directory.
+
+### CSS
+To import their CSS, add `dist/style.css` to the style's section of your `system.json` manifest file.
+
+### JS
+To import the component ES modules, you'll do something like the following:
+
+```js
+import { MyComponent } from './dist/components.vue.es.js';
+```
+
+Adjust the relative path as needed, such as prepending `../../` if imported in a file in `module/sheets/`.
+
+## The sheet class
+
+This module includes both a Handlebars sheet and a Vue sheet. With that in mind, it has both a `actor-sheet.mjs` file for Handlebars, and `actor-sheet.vue.mjs` for Vue, which extends the Handlebars version. That file is kept fairly lightweight, with the most important changes happening in:
+
+- `getData()` - A few small changes from what's already happening in the regular sheet's getData(). In particular, active effects are converted from their document classes to plain objects.
+- `render()` - Overrides the render() method to prevent it from constantly destroying and re-rendering the Vue application on form changes. This version will either a) create the Vue application if one doesn't exist, or b) update its main data property otherwise. You have to be careful when updating objects: if you replace the object the reactivity will be destroyed, so you instead have to replace the object keys.
+- `close()` - Unmount and destroy the Vue app if the sheet is closed.
+- `activateVueListeners()` - Most of our interactivity should be handled within the components `<script>` tags via methods. However, this can be used for some event listeners that are easier to implement in the sheet instance, such as activating TinyMCE editors.
+- `activateListeners()` - We do **NOT** want Foundry's default sheet listeners to run on the Vue sheet. This is mainly used to disable them.
+
+## Initializing the Vue app
+
+Let's step through what's happening to actually enable the Vue app on our character sheet. In our `actor-sheet.vue.mjs` file:
+
+### Import required classes
+
+```js
+import { CharacterSheet } from "../../dist/components.vue.es.js";
+import { createApp } from "../lib/vue.esm-browser.js";
+```
+
+### Create the Vue app
+
+In our render method, we need to initialize the Vue app:
+
+```js
+const context = this.getData();
+// Render the vue application after loading. We'll need to destroy this
+// later in the this.close() method for the sheet.
+if (!this.vueApp) {
+  // Create the app.
+  this.vueApp = createApp({
+    // Set our main data prop for the context object returned by this.getData().
+    data() {
+      return {
+        context: context,
+      }
+    },
+    // Allow our sheet component to be used.
+    components: {
+      'character-sheet': CharacterSheet
+    },
+    // Create a method that can be used to update the context prop later.
+    methods: {
+      updateContext(newContext) {
+        // We can't just replace the object outright without destroying the
+        // reactivity, so this instead updates the keys individually.
+        for (let key of Object.keys(this.context)) {
+          this.context[key] = newContext[key];
+        }
+      }
+    }
+  });
+}
+```
+
+However, when changes are made to the sheet, we don't need to re-render it, we just need to update its data props. After the above if statement, we have an else to cover that:
+
+```js
+// Otherwise, perform update routines on the app.
+else {
+  // Pass new values from this.getData() into the app.
+  this.vueRoot.updateContext(context);
+  this.activateVueListeners($(this.form), true);
+  return;
+}
+```
+
+> - `this.vueApp` is the Vue application.
+> - `this.vueRoot` is the mounted version of the Vue application.
+
+Once we have an updated Vue app, we can execute Foundry's render:
+
+```js
+this._render(force, options).catch(err => {
+  err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
+  console.error(err);
+  this._state = Application.RENDER_STATES.ERROR;
+})
+// Run Vue's render, assign it to our prop for tracking.
+.then(rendered => {
+  this.vueRoot = this.vueApp.mount(`[data-appid="${this.appId}"] .battleScarred-vue`);
+  this.activateVueListeners($(this.form), false);
+});
+
+this.object.apps[this.appId] = this;
+return this;
+```
+
+Finally, we need to destroy the Vue app if the sheet is closed. In our `close()` method:
+
+```js
+this.vueApp.unmount();
+this.vueApp = null;
+this.vueRoot = null;
+return super.close(options);
+```
+
+### Build a character sheet mount point
+
+While most of our template work will be in Vue, we do still need a mount point written in Handlebars for it to attach to. In our `templates/actor/actor-character-sheet.vue.html` file, we have the following:
+
+```handlebars
+<form class="{{cssClass}} {{actor.type}} v3boilerplate-vue flexcol" autocomplete="off">
+  <character-sheet :context="context" :actor="context.actor">Failed to render Vue component.</character-sheet>
+</form>
+```
+
+That gives us our standard form structure expected by sheets, and our `<character-sheet>` component that was mapped to `CharacterSheet` when we created our Vue application. We're passing in a pair of props related to the context and actor, and we have some fallback text in case the component fails to render.
+
+## What about listeners?
+
+As mentioned earlier, `activateListeners()` is generally incompatible with Vue sheets due to it firing too often for our needs. It's recommended that you instead apply any interactivity you need directly in the Vue components using methods and events such as `@click="myClickEventMethod"`. Several of the components in this repo include examples of that, such as `Tabs`, `ActorFeatures`, and everything under the `src/components/tabs/` directory.
+
+## Suggest improvements!
+
+If you have any recommendations or suggested improvements, feel free to open an issue or submit a new merge request!
