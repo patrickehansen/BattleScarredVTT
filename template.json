@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": ["character", "npc", "party"],
     "templates": {
       "base": {
         "health": {
@@ -17,62 +17,59 @@
           "complement": "aet",
           "multiplier": 20
         },
+        "abilities": {
+          "str": {
+            "value": 5,
+            "type": "physical"
+          },
+          "end": {
+            "value": 5,
+            "type": "physical"
+          },
+          "agi": {
+            "value": 5,
+            "type": "physical"
+          },
+          "alt": {
+            "value": 5,
+            "type": "physical"
+          },
+          "mel": {
+            "value": 5,
+            "type": "physical"
+          },
+          "acc": {
+            "value": 5,
+            "type": "physical"
+          },
+          "int": {
+            "value": 5,
+            "type": "mental"
+          },
+          "res": {
+            "value": 5,
+            "type": "mental"
+          },
+          "emp": {
+            "value": 5,
+            "type": "mental"
+          },
+          "aet": {
+            "value": 5,
+            "type": "mental"
+          }	
+        },
         "biography": ""
       }
     },
     "character": {
-      "templates": ["base"],
-      "attributes": {
-        "level": {
-          "value": 1
-        }
-      },
-      "abilities": {
-        "str": {
-          "value": 5,
-          "type": "physical"
-        },
-        "end": {
-          "value": 5,
-          "type": "physical"
-        },
-        "agi": {
-          "value": 5,
-          "type": "physical"
-        },
-        "alt": {
-          "value": 5,
-          "type": "physical"
-        },
-        "mel": {
-          "value": 5,
-          "type": "physical"
-        },
-        "acc": {
-          "value": 5,
-          "type": "physical"
-        },
-        "int": {
-          "value": 5,
-          "type": "mental"
-        },
-        "res": {
-          "value": 5,
-          "type": "mental"
-        },
-        "emp": {
-          "value": 5,
-          "type": "mental"
-        },
-        "aet": {
-          "value": 5,
-          "type": "mental"
-        }	
-      }
+      "templates": ["base"]
     },
     "npc": {
-      "templates": ["base"],
-      "cr": 0
+      "templates": ["base"]
+    },
+    "party": {
+      "characters": []
     }
   },
   "Item": {
