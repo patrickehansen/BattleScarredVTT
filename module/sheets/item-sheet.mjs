@@ -22,13 +22,13 @@ export class BattleScarredItemSheet extends ItemSheet {
 
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.system.type}-sheet.hbs`;
+    return `${path}/item-${this.item.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     // Retrieve base data structure.
     const context = super.getData();
 
@@ -45,6 +45,8 @@ export class BattleScarredItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.data = itemData.system;
     context.flags = itemData.flags;
+
+    context.description = await TextEditor.enrichHTML(itemData.system.description, { async: true });
 
     return context;
   }

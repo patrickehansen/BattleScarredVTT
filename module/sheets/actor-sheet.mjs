@@ -25,7 +25,7 @@ export class BattleScarredActorSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     // Retrieve the data structure from the base sheet. You can inspect or log
     // the context variable to see the structure, but some key properties for
     // sheets are the actor object, the data object, whether or not it's
@@ -56,7 +56,8 @@ export class BattleScarredActorSheet extends ActorSheet {
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
-    
+    context.biography = await TextEditor.enrichHTML(actorData.system.biography, {async: true});
+
     return context;
   }
 
