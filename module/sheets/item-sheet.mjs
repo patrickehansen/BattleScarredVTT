@@ -2,12 +2,12 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class v3boilerplateItemSheet extends ItemSheet {
+export class BattleScarredItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["vueBattleScarred", "sheet", "item"],
+      classes: ["BattleScarredVTT", "sheet", "item"],
       width: 520,
       height: 480,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
@@ -16,13 +16,13 @@ export class v3boilerplateItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/vueBattleScarred/templates/item";
+    const path = "systems/BattleScarredVTT/templates/item";
     // Return a single sheet for all item types.
     // return `${path}/item-sheet.html`;
 
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.data.type}-sheet.html`;
+    return `${path}/item-${this.item.data.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */

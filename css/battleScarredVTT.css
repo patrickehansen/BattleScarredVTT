@@ -13,7 +13,7 @@
 .grid,
 .grid-2col {
   display: grid;
-  grid-column: span 2/span 2;
+  grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
@@ -21,52 +21,52 @@
 }
 
 .grid-3col {
-  grid-column: span 3/span 3;
+  grid-column: span 3 / span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-4col {
-  grid-column: span 4/span 4;
+  grid-column: span 4 / span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-5col {
-  grid-column: span 5/span 5;
+  grid-column: span 5 / span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-6col {
-  grid-column: span 6/span 6;
+  grid-column: span 6 / span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .grid-7col {
-  grid-column: span 7/span 7;
+  grid-column: span 7 / span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-8col {
-  grid-column: span 8/span 8;
+  grid-column: span 8 / span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .grid-9col {
-  grid-column: span 9/span 9;
+  grid-column: span 9 / span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .grid-10col {
-  grid-column: span 10/span 10;
+  grid-column: span 10 / span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .grid-11col {
-  grid-column: span 11/span 11;
+  grid-column: span 11 / span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
 .grid-12col {
-  grid-column: span 12/span 12;
+  grid-column: span 12 / span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -161,135 +161,218 @@
 .flex-group-center,
 .flex-group-left,
 .flex-group-right {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
 }
 
 .flex-group-left {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
   text-align: left;
 }
 
 .flex-group-right {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
   text-align: right;
 }
 
 .flexshrink {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
   flex: 0;
 }
 
 .flex-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
   justify-content: space-between;
 }
 
 .flexlarge {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
 }
 
 .align-left {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
   text-align: left;
 }
 
 .align-right {
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
   text-align: right;
 }
 
 .align-center {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   text-align: center;
 }
 
-/* Styles limited to battle scarred sheets */
-.battleScarred-vue {
+/* Styles limited to battleScarredVTT sheets */
+.BattleScarredVTT {
   /* ----------------------------------------- */
   /*  Items Lists                              */
   /* ----------------------------------------- */
-  /* Example style for v3boilerplate (can be removed if not needed) */
+  /* Example style for BattleScarred (can be removed if not needed) */
 }
-.battleScarred-vue .item-form {
+
+.BattleScarredVTT .item-form {
   font-family: "Roboto", sans-serif;
 }
-.battleScarred-vue .sheet-header {
+
+.BattleScarredVTT .sheet-header {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 auto;
   flex: 0 auto;
   overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
   justify-content: flex-start;
   margin-bottom: 10px;
 }
-.battleScarred-vue .sheet-header .profile-img {
+
+.BattleScarredVTT .sheet-header .profile-img {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
   flex: 0 0 100px;
   height: 100px;
   margin-right: 10px;
 }
-.battleScarred-vue .sheet-header .header-fields {
+
+.BattleScarredVTT .sheet-header .header-fields {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
 }
-.battleScarred-vue .sheet-header h1.charname {
+
+.BattleScarredVTT .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
-.battleScarred-vue .sheet-header h1.charname input {
+
+.BattleScarredVTT .sheet-header h1.charname input {
   width: 100%;
   height: 100%;
   margin: 0;
 }
-.battleScarred-vue .sheet-tabs {
+
+.BattleScarredVTT .sheet-tabs {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
   flex: 0;
 }
-.battleScarred-vue .sheet-body,
-.battleScarred-vue .sheet-body .tab,
-.battleScarred-vue .sheet-body .tab .editor {
+
+.BattleScarredVTT .sheet-body,
+.BattleScarredVTT .sheet-body .tab,
+.BattleScarredVTT .sheet-body .tab .editor {
   height: 100%;
 }
-.battleScarred-vue .tox .tox-editor-container {
+
+.BattleScarredVTT .tox .tox-editor-container {
   background: #fff;
 }
-.battleScarred-vue .tox .tox-edit-area {
+
+.BattleScarredVTT .tox .tox-edit-area {
   padding: 0 8px;
 }
-.battleScarred-vue .resource-label {
+
+.BattleScarredVTT .resource-label {
   font-weight: bold;
 }
-.battleScarred-vue .mentalLabel {
-  background-color: aquamarine;
-}
-.battleScarred-vue .physicalLabel {
-  background-color: salmon;
-}
-.battleScarred-vue .ability-label {
+
+.BattleScarredVTT .ability-label {
   font-weight: bold;
   height: 24px;
   padding: 5px;
+  -webkit-filter: drop-shadow(2px 2px 1px black);
   filter: drop-shadow(2px 2px 1px black);
 }
-.battleScarred-vue .items-header {
+
+.BattleScarredVTT .mentalLabel {
+  background-color: aquamarine;
+}
+
+.BattleScarredVTT .physicalLabel {
+  background-color: salmon;
+}
+
+.BattleScarredVTT .abilitySumContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  width: 75%;
+}
+
+.BattleScarredVTT .abilitySumContainer .abilitySum {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 5px 10px;
+  margin: 2px;
+  font-weight: bold;
+  border-radius: 3px;
+  border: solid 1px gray;
+}
+
+.BattleScarredVTT .abilityGroup {
+  margin-top: 5px;
+}
+
+.BattleScarredVTT .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove #eeede0;
   font-weight: bold;
 }
-.battleScarred-vue .items-header > * {
+
+.BattleScarredVTT .items-header > * {
   font-size: 14px;
   text-align: center;
 }
-.battleScarred-vue .items-header .item-name {
+
+.BattleScarredVTT .items-header .item-name {
   font-weight: bold;
   padding-left: 5px;
   text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
-.battleScarred-vue .items-list {
+
+.BattleScarredVTT .items-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -297,88 +380,124 @@
   scrollbar-width: thin;
   color: #444;
 }
-.battleScarred-vue .items-list .item-list {
+
+.BattleScarredVTT .items-list .item-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.battleScarred-vue .items-list .item-name {
+
+.BattleScarredVTT .items-list .item-name {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
   margin: 0;
   overflow: hidden;
   font-size: 13px;
   text-align: left;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
-.battleScarred-vue .items-list .item-name h3, .battleScarred-vue .items-list .item-name h4 {
+
+.BattleScarredVTT .items-list .item-name h3, .BattleScarredVTT .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
 }
-.battleScarred-vue .items-list .item-controls {
+
+.BattleScarredVTT .items-list .item-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
   flex: 0 0 100px;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
 }
-.battleScarred-vue .items-list .item-controls a {
+
+.BattleScarredVTT .items-list .item-controls a {
   font-size: 12px;
   text-align: center;
   margin: 0 6px;
 }
-.battleScarred-vue .items-list .item {
+
+.BattleScarredVTT .items-list .item {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 0 2px;
   border-bottom: 1px solid #c9c7b8;
 }
-.battleScarred-vue .items-list .item:last-child {
+
+.BattleScarredVTT .items-list .item:last-child {
   border-bottom: none;
 }
-.battleScarred-vue .items-list .item .item-name {
+
+.BattleScarredVTT .items-list .item .item-name {
   color: #191813;
 }
-.battleScarred-vue .items-list .item .item-name .item-image {
+
+.BattleScarredVTT .items-list .item .item-name .item-image {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 30px;
   flex: 0 0 30px;
   height: 30px;
   background-size: 30px;
   border: none;
   margin-right: 5px;
 }
-.battleScarred-vue .items-list .item-prop {
+
+.BattleScarredVTT .items-list .item-prop {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
-.battleScarred-vue .items-list .items-header {
+
+.BattleScarredVTT .items-list .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove #eeede0;
   font-weight: bold;
 }
-.battleScarred-vue .items-list .items-header > * {
+
+.BattleScarredVTT .items-list .items-header > * {
   font-size: 12px;
   text-align: center;
 }
-.battleScarred-vue .items-list .items-header .item-name {
+
+.BattleScarredVTT .items-list .items-header .item-name {
   padding-left: 5px;
   text-align: left;
 }
-.battleScarred-vue .item-formula {
+
+.BattleScarredVTT .item-formula {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 200px;
   flex: 0 0 200px;
   padding: 0 8px;
 }
-.battleScarred-vue .effects .item .effect-source,
-.battleScarred-vue .effects .item .effect-duration,
-.battleScarred-vue .effects .item .effect-controls {
+
+.BattleScarredVTT .effects .item .effect-source,
+.BattleScarredVTT .effects .item .effect-duration,
+.BattleScarredVTT .effects .item .effect-controls {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
-.battleScarred-vue .effects .item .effect-controls {
+
+.BattleScarredVTT .effects .item .effect-controls {
   border: none;
 }

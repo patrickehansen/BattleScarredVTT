@@ -2,7 +2,7 @@
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class v3boilerplateActor extends Actor {
+export class BattleScarredActor extends Actor {
 
   /** @override */
   prepareData() {
@@ -29,9 +29,9 @@ export class v3boilerplateActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this;
-    const systemData = actorData.system;;
-    const flags = actorData.flags.battleScarred || {};
+    const actorData = this.data;
+    const data = actorData.data;
+    const flags = actorData.flags.battleScarredVTT || {};
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
@@ -46,15 +46,15 @@ export class v3boilerplateActor extends Actor {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
-    const systemData = actorData.system.abilities;
+    const data = actorData.system;
 
-    // // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.mental)) {
+    // Loop through ability scores, and add their modifiers to our sheet output.
+    for (let [key, ability] of Object.entries(data.abilities)) {
       ability.mod = Math.ceil(ability.value);
     }
-    for (let [key, ability] of Object.entries(systemData.physical)) {
-      ability.mod = Math.floor(ability.value);
-    }
+
+    data.health.max = data.abilities[data.health.complement].mod * data.health.multiplier;
+    data.aether.max = data.abilities[data.aether.complement].mod * data.aether.multiplier;
   }
 
   /**
@@ -81,26 +81,22 @@ export class v3boilerplateActor extends Actor {
    * Prepare character roll data.
    */
   _getCharacterRollData(data) {
-    if (this.type !== 'character') return;
+    if (this.data.type !== 'character') return;
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
-    if (data.mental) {
-      for (let [k, v] of Object.entries(data.mental)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-      for (let [k, v] of Object.entries(data.physical)) {
+    if (data.abilities) {
+      for (let [k, v] of Object.entries(data.abilities)) {
         data[k] = foundry.utils.deepClone(v);
       }
     }
-    console.log('characterRollData', data.abilities)
   }
 
   /**
    * Prepare NPC roll data.
    */
   _getNpcRollData(data) {
-    if (this.type !== 'npc') return;
+    if (this.data.type !== 'npc') return;
 
     // Process additional NPC data here.
   }

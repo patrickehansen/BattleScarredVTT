@@ -1,14 +1,13 @@
 // Import document classes.
-import { v3boilerplateActor } from "./documents/actor.mjs";
-import { v3boilerplateItem } from "./documents/item.mjs";
+import { BattleScarredActor } from "./documents/actor.mjs";
+import { BattleScarredItem } from "./documents/item.mjs";
 // Import sheet classes.
-import { v3boilerplateActorSheet } from "./sheets/actor-sheet.mjs";
-import { v3boilerplateItemSheet } from "./sheets/item-sheet.mjs";
+import { BattleScarredActorSheet } from "./sheets/actor-sheet.mjs";
+import { BattleScarredItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { BATTLESCARRED } from "./helpers/config.mjs";
-// Handle Vue.
-import { v3boilerplateActorSheetVue } from "./sheets/actor-sheet.vue.mjs";
+import { BATTLESCARREDVTT } from "./helpers/config.mjs";
+import { helpers } from "./handlebars.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -18,37 +17,36 @@ Hooks.once('init', async function() {
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.vueBattleScarred = {
-    v3boilerplateActor,
-    v3boilerplateItem,
+  game.BattleScarredVTT = {
+    BattleScarredActor,
+    BattleScarredItem,
     rollItemMacro
   };
 
   // Add custom constants for configuration.
-  CONFIG.BATTLESCARRED = BATTLESCARRED;
+  CONFIG.BATTLESCARREDVTT = BATTLESCARREDVTT;
 
   /**
    * Set an initiative formula for the system
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "3d6 - @abilities.physical.agi.mod",
+    formula: "1d20 + @abilities.dex.mod",
     decimals: 2
   };
 
   // Define custom Document classes
-  CONFIG.Actor.documentClass = v3boilerplateActor;
-  CONFIG.Item.documentClass = v3boilerplateItem;
+  CONFIG.Actor.documentClass = BattleScarredActor;
+  CONFIG.Item.documentClass = BattleScarredItem;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("vueBattleScarred", v3boilerplateActorSheet, { label: 'Handlebars', makeDefault: false });
-  Actors.registerSheet("vueBattleScarred", v3boilerplateActorSheetVue, { label: 'Vue', makeDefault: true });
+  Actors.registerSheet("BattleScarredVTT", BattleScarredActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("vueBattleScarred", v3boilerplateItemSheet, { makeDefault: true });
+  Items.registerSheet("BattleScarredVTT", BattleScarredItemSheet, { makeDefault: true });
 
   // Preload Handlebars templates.
-  preloadHandlebarsTemplates();
+  return preloadHandlebarsTemplates();
 });
 
 /* -------------------------------------------- */
@@ -56,19 +54,9 @@ Hooks.once('init', async function() {
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here are a few useful examples:
-Handlebars.registerHelper('concat', function() {
-  var outStr = '';
-  for (var arg in arguments) {
-    if (typeof arguments[arg] != 'object') {
-      outStr += arguments[arg];
-    }
-  }
-  return outStr;
-});
-
-Handlebars.registerHelper('toLowerCase', function(str) {
-  return str.toLowerCase();
-});
+Object.entries(helpers).forEach(([key, value]) => {
+  Handlebars.registerHelper(key, value);
+})
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
@@ -96,7 +84,7 @@ async function createItemMacro(data, slot) {
   const item = data.data;
 
   // Create the macro command
-  const command = `game.v3boilerplate.rollItemMacro("${item.name}");`;
+  const command = `game.BattleScarredVTT.rollItemMacro("${item.name}");`;
   let macro = game.macros.find(m => (m.name === item.name) && (m.command === command));
   if (!macro) {
     macro = await Macro.create({
@@ -104,7 +92,7 @@ async function createItemMacro(data, slot) {
       type: "script",
       img: item.img,
       command: command,
-      flags: { "vueBattleScarred.itemMacro": true }
+      flags: { "BattleScarredVTT.itemMacro": true }
     });
   }
   game.user.assignHotbarMacro(macro, slot);

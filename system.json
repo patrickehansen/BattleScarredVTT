@@ -1,16 +1,13 @@
 {
   "name": "BattleScarredVTT",
-  "title": "Battle Scarred",
-  "description": "The v3boilerplate system for FoundryVTT!",
+  "title": "Battle Scarred VTT 4",
+  "description": "The Battle Scarred VTT system for FoundryVTT!",
   "version": "1.0.0",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
-  "author": "Asacolips",
-  "esmodules": ["module/v3boilerplate.mjs"],
-  "styles": [
-    "css/v3boilerplate.css",
-    "dist/styles.vue.css"
-  ],
+  "author": "Tiskahar",
+  "esmodules": ["module/battleScarredVTT.mjs"],
+  "styles": ["css/battleScarredVTT.css"],
   "scripts": [],
   "packs": [],
   "languages": [
@@ -23,7 +20,7 @@
   "gridDistance": 5,
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "aether",
+  "secondaryTokenAttribute": "power",
   "url": "",
   "manifest": "",
   "download": "",

@@ -23,11 +23,11 @@
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.aether.value" class="resource-label">Aether</label>
+          <label for="data.power.value" class="resource-label">Power</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.aether.value" value="{{data.aether.value}}" data-dtype="Number"/>
+            <input type="text" name="data.power.value" value="{{data.power.value}}" data-dtype="Number"/>
             <span> / </span>
-            <input type="text" name="data.aether.max" value="{{data.aether.max}}" data-dtype="Number"/>
+            <input type="text" name="data.power.max" value="{{data.power.max}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -63,12 +63,12 @@
 
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/vueBattleScarred/templates/actor/parts/actor-items.html"}}
+       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-items.hbs"}}
     </div>
 
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/vueBattleScarred/templates/actor/parts/actor-effects.html"}}
+      {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
     </div>
 
   </section>

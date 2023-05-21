@@ -4,13 +4,13 @@ import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/ef
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class v3boilerplateActorSheet extends ActorSheet {
+export class BattleScarredActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["vueBattleScarred", "sheet", "actor"],
-      template: "systems/vueBattleScarred/templates/actor/actor-sheet.html",
+      classes: ["BattleScarredVTT", "sheet", "actor"],
+      template: "systems/BattleScarredVTT/templates/actor/actor-sheet.hbs",
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
@@ -19,7 +19,7 @@ export class v3boilerplateActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/vueBattleScarred/templates/actor/actor-${this.actor.type}-sheet.html`;
+    return `systems/BattleScarredVTT/templates/actor/actor-${this.actor.data.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -36,7 +36,7 @@ export class v3boilerplateActorSheet extends ActorSheet {
     const actorData = this.actor.toObject(false);
 
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.system = actorData.system;
+    context.data = actorData.system;
     context.flags = actorData.flags;
 
     // Prepare character data and items.
@@ -56,6 +56,7 @@ export class v3boilerplateActorSheet extends ActorSheet {
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
+    
     return context;
   }
 
@@ -67,28 +68,27 @@ export class v3boilerplateActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
-    console.log('hey this is the prepare character data', context.system.abilities);
-    if (!context.system.abilities) return;
-    // if (context.data.abilities.mental) {
-    //   for (let [k, v] of Object.entries(context.data.abilities.mental)) {
-    //     v.label = game.i18n.localize(CONFIG.BATTLESCARRED.abilities.mental[k]) ?? k;
-    //   }
-    //   for (let [k, v] of Object.entries(context.data.abilities.physical)) {
-    //     v.label = game.i18n.localize(CONFIG.BATTLESCARRED.abilities.physical[k]) ?? k;
-    //   }
-    // }
-    try {
-      for (let [k, v] of Object.entries(context.system.abilities.mental)) {
-        v.label = game.i18n.localize(CONFIG.BATTLESCARRED.abilities.mental[k]) ?? k;
-      }
-      for (let [k, v] of Object.entries(context.system.abilities.physical)) {
-        v.label = game.i18n.localize(CONFIG.BATTLESCARRED.abilities.physical[k]) ?? k;
-      }
-    } catch (e) {
-      console.error('Error in prepareCharacterData', e);
-      throw e;
+    // Handle ability scores.
+    for (let [k, v] of Object.entries(context.data.abilities)) {
+      v.label = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[k]) ?? k;
     }
- 
+
+    // Split abilities by type for display purposes
+    context.abilities = Object.entries(context.data.abilities).reduce((a, [short, ability]) => {
+      if (!ability.type) return a;
+      if (a[ability.type]) {
+        a[ability.type].list[short] = ability;
+        a[ability.type].sum += ability.value;
+      } else {
+        a[ability.type] = {
+          list: {
+            [short]: ability
+          },
+          sum: ability.value,
+        }
+      } 
+      return a;
+    }, {});
   }
 
   /**
@@ -218,11 +218,9 @@ export class v3boilerplateActorSheet extends ActorSheet {
    * @private
    */
   _onRoll(event) {
-    console.log('heeey this is our onRoll')
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
-    console.log('onRoll1', dataset)
 
     // Handle item rolls.
     if (dataset.rollType) {
@@ -237,7 +235,6 @@ export class v3boilerplateActorSheet extends ActorSheet {
     if (dataset.roll) {
       let label = dataset.label ? `[roll] ${dataset.label}` : '';
       let roll = new Roll(dataset.roll, this.actor.getRollData());
-      console.log('onRoll', dataset, roll, label)
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: label,

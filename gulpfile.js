@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const prefix = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
-const sass = require('gulp-sass')(require('sass'));
+const sass = require('gulp-sass');
 
 /* ----------------------------------------- */
 /*  Compile Sass
@@ -9,7 +9,7 @@ const sass = require('gulp-sass')(require('sass'));
 
 // Small error handler helper function.
 function handleError(err) {
-  console.error(err.toString());
+  console.log(err.toString());
   this.emit('end');
 }
 

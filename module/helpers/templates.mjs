@@ -7,9 +7,11 @@
   return loadTemplates([
 
     // Actor partials.
-    "systems/vueBattleScarred/templates/actor/parts/actor-features.html",
-    "systems/vueBattleScarred/templates/actor/parts/actor-items.html",
-    "systems/vueBattleScarred/templates/actor/parts/actor-spells.html",
-    "systems/vueBattleScarred/templates/actor/parts/actor-effects.html",
+    "systems/BattleScarredVTT/templates/actor/parts/actor-features.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/actor-items.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/actor-spells.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/ability.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/abilitySum.hbs",
   ]);
 };

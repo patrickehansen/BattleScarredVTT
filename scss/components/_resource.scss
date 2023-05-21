@@ -2,6 +2,13 @@
   font-weight: bold;
 }
 
+.ability-label {
+  font-weight: bold;
+  height: 24px;
+  padding: 5px;
+  filter: drop-shadow(2px 2px 1px black);
+}
+
 .mentalLabel {
   background-color: aquamarine;
 }
@@ -10,9 +17,21 @@
   background-color: salmon;
 }
 
-.ability-label {
-  font-weight: bold;
-  height: 24px;
-  padding: 5px;
-  filter: drop-shadow(2px 2px 1px black);
+.abilitySumContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 75%;
+
+  .abilitySum {
+    background: rgba(0,0,0,0.05);
+    padding: 5px 10px;
+    margin: 2px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: solid 1px gray;
+  }
+}
+
+.abilityGroup {
+  margin-bottom: 5px;
 }

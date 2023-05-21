@@ -23,13 +23,14 @@
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.aether.value" class="resource-label">Aether</label>
+          <label for="data.power.value" class="resource-label">Aether</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.aether.value" value="{{data.aether.value}}" data-dtype="Number"/>
+          <input type="text" name="data.power.value" value="{{data.aether.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="data.aether.max" value="{{data.aether.max}}" data-dtype="Number"/>
+          <input type="text" name="data.power.max" value="{{data.aether.max}}" data-dtype="Number"/>
           </div>
         </div>
+
 
       </div>
     </div>
@@ -56,34 +57,22 @@
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
-          <div class="physical flexcol">
-            {{#each system.physical as |ability key|}}
-            <div class="ability flexrow flex-group-center">
-              <label for="system.physical.{{key}}.value" class="ability-label rollable flexlarge align-left physicalLabel" data-roll="3d6-@physical.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
-              <input type="text" name="system.physical.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-              <span class="ability-mod rollable" data-roll="3d6-@physical.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-            </div>
+          <div class="abilities flexcol">
+            {{#each abilities as |child key|}}
+              <div class="abilityGroup">
+                {{#each child.list as |ability key|}}
+                  {{> "systems/BattleScarredVTT/templates/actor/parts/ability.hbs" ability=ability key=key}}
+                {{/each}}
+                {{> "systems/BattleScarredVTT/templates/actor/parts/abilitySum.hbs" sum=child.sum}}
+              </div>
             {{/each}}
           </div>
-          
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-            use both the "grid" and "grid-Ncol" class where "N" can be any number
-            from 1 to 12 and will create that number of columns.  --}}
-            <div class="mental flexcol">
-              {{#each system.mental as |ability key|}}
-              <div class="ability flexrow flex-group-center">
-                <label for="system.mental.{{key}}.value" class="ability-label rollable flexlarge align-left mentalLabel" data-roll="3d6-@mental.{{key}}.mod" data-label="{{ability.label}}">{{ability.label}}</label>
-                <input type="text" name="system.mental.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-                <span class="ability-mod rollable" data-roll="3d6-@mental.{{key}}.mod" data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
-              </div>
-              {{/each}}
-            </div>
         </aside>
 
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid-span-2">
           {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
-          {{> "systems/vueBattleScarred/templates/actor/parts/actor-features.html"}}
+          {{> "systems/BattleScarredVTT/templates/actor/parts/actor-features.hbs"}}
         </section>
 
       </section>
@@ -97,17 +86,17 @@
 
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/vueBattleScarred/templates/actor/parts/actor-items.html"}}
+       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-items.hbs"}}
     </div>
 
     {{!-- Owned Spells Tab --}}
     <div class="tab spells" data-group="primary" data-tab="spells">
-      {{> "systems/vueBattleScarred/templates/actor/parts/actor-spells.html"}}
+      {{> "systems/BattleScarredVTT/templates/actor/parts/actor-spells.hbs"}}
     </div>
 
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-      {{> "systems/vueBattleScarred/templates/actor/parts/actor-effects.html"}}
+      {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
     </div>
 
   </section>
