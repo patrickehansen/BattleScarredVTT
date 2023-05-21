@@ -19,7 +19,7 @@ export class BattleScarredActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/BattleScarredVTT/templates/actor/actor-${this.actor.data.type}-sheet.hbs`;
+    return `systems/BattleScarredVTT/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */

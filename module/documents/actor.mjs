@@ -43,7 +43,6 @@ export class BattleScarredActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    console.log('why doesnt this work', actorData)
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
