@@ -29,8 +29,8 @@ export class BattleScarredActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this.data;
-    const data = actorData.data;
+    const actorData = this;
+    const data = actorData.system;
     const flags = actorData.flags.battleScarredVTT || {};
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
@@ -43,6 +43,7 @@ export class BattleScarredActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
+    console.log('why doesnt this work', actorData)
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
@@ -81,7 +82,7 @@ export class BattleScarredActor extends Actor {
    * Prepare character roll data.
    */
   _getCharacterRollData(data) {
-    if (this.data.type !== 'character') return;
+    if (this.system.type !== 'character') return;
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
@@ -96,7 +97,7 @@ export class BattleScarredActor extends Actor {
    * Prepare NPC roll data.
    */
   _getNpcRollData(data) {
-    if (this.data.type !== 'npc') return;
+    if (this.system.type !== 'npc') return;
 
     // Process additional NPC data here.
   }

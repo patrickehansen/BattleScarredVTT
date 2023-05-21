@@ -7,15 +7,15 @@
           "value": 10,
           "min": 0,
           "max": 10,
-          "complement": "res",
-          "multiplier": 10
+          "complement": "end",
+          "multiplier": 5
         },
         "aether": {
           "value": 5,
           "min": 0,
           "max": 5,
           "complement": "aet",
-          "multiplier": 4
+          "multiplier": 20
         },
         "biography": ""
       }
