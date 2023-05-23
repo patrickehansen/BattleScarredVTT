@@ -6,11 +6,7 @@
     <div class="header-fields">
       <div class="topHeader">
         <label>Name:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
-        <label>Background:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Background"/></h2>
-      </div>
-      <div class="topHeader2">
-        <label>Deity:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
-        <label>Deity's Gift:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
+        <label>Background:</label><h2 class="charname"><input name="biography" type="text" value="{{actor.biography}}" placeholder="Background"/></h2>
       </div>
       
       {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
@@ -22,20 +18,20 @@
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. --}}
         <div class="resource flex-group-center">
-          <label for="data.health.value" class="resource-label">Health</label>
+          <label for="system.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+            <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
             <span> / </span>
-            <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
+            <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.power.value" class="resource-label">Power</label>
+          <label for="system.aether.value" class="resource-label">Aether</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.power.value" value="{{data.aether.value}}" data-dtype="Number"/>
+            <input type="text" name="system.aether.value" value="{{system.aether.value}}" data-dtype="Number"/>
             <span> / </span>
-            <input type="text" name="data.power.max" value="{{data.aether.max}}" data-dtype="Number"/>
+            <input type="text" name="system.aether.max" value="{{system.aether.max}}" data-dtype="Number"/>
           </div>
         </div>
 
