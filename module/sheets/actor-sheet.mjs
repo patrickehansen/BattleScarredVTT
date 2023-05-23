@@ -11,8 +11,8 @@ export class BattleScarredActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["BattleScarredVTT", "sheet", "actor"],
       template: "systems/BattleScarredVTT/templates/actor/actor-sheet.hbs",
-      width: 600,
-      height: 600,
+      width: 750,
+      height: 700,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }
@@ -36,7 +36,7 @@ export class BattleScarredActorSheet extends ActorSheet {
     const actorData = this.actor.toObject(false);
 
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = actorData.system;
+    context.system = actorData.system;
     context.flags = actorData.flags;
 
     // Prepare character data and items.
@@ -70,12 +70,12 @@ export class BattleScarredActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.abilities)) {
+    for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[k]) ?? k;
     }
 
     // Split abilities by type for display purposes
-    context.abilities = Object.entries(context.data.abilities).reduce((a, [short, ability]) => {
+    context.abilities = Object.entries(context.system.abilities).reduce((a, [short, ability]) => {
       if (!ability.type) return a;
       if (a[ability.type]) {
         a[ability.type].list[short] = ability;
@@ -129,8 +129,8 @@ export class BattleScarredActorSheet extends ActorSheet {
       }
       // Append to spells.
       else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.spellLevel != undefined) {
+          spells[i.spellLevel].push(i);
         }
       }
     }

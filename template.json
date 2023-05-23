@@ -2,7 +2,7 @@
   "Actor": {
     "types": ["character", "npc", "party"],
     "templates": {
-      "base": {
+      "baseCharacter": {
         "health": {
           "value": 10,
           "min": 0,
@@ -17,63 +17,101 @@
           "complement": "aet",
           "multiplier": 20
         },
+        "action": {
+          "value": 16,
+          "max": 16,
+          "complement": "agi",
+          "multiplier": 4
+        },
         "abilities": {
           "str": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "end": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "agi": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "alt": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "mel": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "acc": {
             "value": 5,
-            "type": "physical"
+            "type": "physical",
+            "notes": ""
           },
           "int": {
             "value": 5,
-            "type": "mental"
+            "type": "mental",
+            "notes": ""
           },
           "res": {
             "value": 5,
-            "type": "mental"
+            "type": "mental",
+            "notes": ""
           },
           "emp": {
             "value": 5,
-            "type": "mental"
+            "type": "mental",
+            "notes": ""
           },
           "aet": {
             "value": 5,
-            "type": "mental"
+            "type": "mental",
+            "notes": ""
           }	
         },
-        "biography": ""
+        "biography": "",
+        "diety": "",
+        "dietyGift": "",
+        "injuries": {
+          "value": 0,
+          "max": 5
+        },
+        "permanentInjuries": {
+          "value": 0,
+          "max": 5
+        },
+        "xp": 0,
+        "armorMitigation":  0,			
+        "mulligan": "",						
+        "armorHealth": {
+          "value": 0,
+          "max": 10
+        },
+        "money": 0,
+        "codexSlots": {
+          "value": 0,
+          "max": 10
+        }
       }
     },
     "character": {
-      "templates": ["base"]
+      "templates": ["baseCharacter"]
     },
     "npc": {
-      "templates": ["base"]
+      "templates": ["baseCharacter"]
     },
     "party": {
       "characters": []
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "feature", "spell", "perk", "armor", "weapon"],
     "templates": {
       "base": {
         "description": ""
@@ -91,6 +129,23 @@
     "spell": {
       "templates": ["base"],
       "spellLevel": 1
+    },
+    "perk": {
+      "templates": ["base"],
+      "type": "profession"
+    },
+    "armor": {
+      "templates": ["base"],
+      "location": "head",
+      "weight": 0,
+      "mitigation": 0
+    },
+    "weapon": {
+      "templates": ["base"],
+      "type": "sword",
+      "damage": "1d5",
+      "weight": 0,
+      "ap": 0
     }
   }
 }

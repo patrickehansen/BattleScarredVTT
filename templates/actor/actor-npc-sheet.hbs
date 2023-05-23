@@ -4,7 +4,15 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+      <div class="topHeader">
+        <label>Name:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
+        <label>Background:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Background"/></h2>
+      </div>
+      <div class="topHeader2">
+        <label>Deity:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
+        <label>Deity's Gift:</label><h2 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h2>
+      </div>
+      
       {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
       use both the "grid" and "grid-Ncol" class where "N" can be any number
       from 1 to 12 and will create that number of columns.  --}}
@@ -50,7 +58,7 @@
     {{!-- Biography Tab --}}
     <div class="tab biography" data-group="primary" data-tab="description">
       {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
-      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
+      {{editor content=system.biography target="system.biography" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Owned Items Tab --}}

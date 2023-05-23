@@ -42,7 +42,7 @@ export class BattleScarredItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
 
-    // Add the actor's data to context.data for easier access, as well as flags.
+    // Add the actor's data to context.system for easier access, as well as flags.
     context.data = itemData.system;
     context.flags = itemData.flags;
 
@@ -55,7 +55,7 @@ export class BattleScarredItemSheet extends ItemSheet {
 
   /** @override */
   activateListeners(html) {
-    super.activateListeners(html);
+    //super.activateListeners(html);
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
