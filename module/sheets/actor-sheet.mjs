@@ -11,8 +11,10 @@ export class BattleScarredActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["BattleScarredVTT", "sheet", "actor"],
       template: "systems/BattleScarredVTT/templates/actor/actor-sheet.hbs",
-      width: 750,
-      height: 700,
+      width: 755,
+      top: 200,
+      left: 350,
+      height: 785,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }

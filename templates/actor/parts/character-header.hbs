@@ -1,0 +1,23 @@
+<header class="sheet-header">
+  <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+  <div class="header-fields">
+    <div class="topHeader">
+      <div class="labeledInput">
+        <label>Name:</label><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+      </div>
+      <div class="labeledInput">
+        <label>Background:</label><input name="system.biography" type="text" value="{{system.biography}}" placeholder="Background"/>
+      </div>
+    </div>
+    <div class="topHeader">
+      <div class="labeledInput">
+        <label>Deity:</label><input name="system.deity" type="text" value="{{system.deity}}" placeholder="Deity"/>
+      </div>
+      <div class="labeledInput">
+        <label>Deity's Gift:</label><input name="system.deityGift" type="text" value="{{system.deityGift}}" placeholder="Deity's Gift"/>
+      </div>
+    </div>
+    
+    {{> "systems/BattleScarredVTT/templates/actor/parts/character-resources.hbs" system=system}}
+  </div>
+</header>
