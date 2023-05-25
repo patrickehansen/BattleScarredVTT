@@ -6,104 +6,19 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="features">Features</a>
-    <a class="item" data-tab="items">Items</a>
-    <a class="item" data-tab="spells">Spells</a>
-    <a class="item" data-tab="effects">Effects</a>
+    <a class="item" data-tab="status">Status</a>
+    <a class="item" data-tab="gear">Gear</a>
+    <a class="item" data-tab="codex">Codex</a>
+    <a class="item" data-tab="perks">Perks</a>
+    <a class="item" data-tab="bio">Bio</a>
+    <a class="item" data-tab="notes">Notes</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-    {{!-- Owned Features Tab --}}
-    <div class="tab features" data-group="primary" data-tab="features">
-      <section class="state">
-        <div class="grid-4col grid">
-          <div class="resource-column">
-            <div class="resource-container resource flex-group-center">
-              <label for="system.injuries.value" class="resource-label">Injuries</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.injuries.value" value="{{system.injuries.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="text" name="system.injuries.max" value="{{system.injuries.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.permanentInjuries.value" class="resource-label">Permanent Injuries</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.permanentInjuries.value" value="{{system.permanentInjuries.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="text" name="system.permanentInjuries.max" value="{{system.permanentInjuries.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.codexSlots.value" class="resource-label">Codex Slots</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.codexSlots.value" value="{{system.codexSlots.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="text" name="system.codexSlots.max" value="{{system.codexSlots.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-          </div>
-          <div class="resource-column">
-            <div class="resource-container resource flex-group-center">
-              <label for="system.xp" class="resource-label">XPs</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.xp" value="{{system.xp}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.money" class="resource-label">Money</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.money" value="{{system.money}}" data-dtype="Number"/>
-              </div>
-            </div>
-          </div>
-          <div class="resource-column">
-            <div class="resource-container resource flex-group-center">
-              <label for="system.armorMitigation.value" class="resource-label">Armor Mitigation</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.armorMitigation.value" value="{{system.armorMitigation.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="text" name="system.armorMitigation.max" value="{{system.armorMitigation.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.armorHealth.value" class="resource-label">Armor Health</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.armorHealth.value" value="{{system.armorHealth.value}}" data-dtype="Number"/>
-              <span> / </span>
-              <input type="text" name="system.armorHealth.max" value="{{system.armorHealth.max}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.encumbrance" class="resource-label">Encumbrance</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.encumbrance" value="{{system.encumbrance}}" data-dtype="Number"/>
-              </div>
-            </div>
-          </div>
-          <div class="resource-column">
-            <div class="resource-container resource flex-group-center">
-              <label for="system.mulligan" class="resource-label">Mulligan</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.mulligan" value="{{system.mulligan}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.carry" class="resource-label">Carry</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.carry" value="{{system.carry}}" data-dtype="Number"/>
-              </div>
-            </div>
-            <div class="resource-container resource flex-group-center">
-              <label for="system.lift" class="resource-label">Lift</label>
-              <div class="resource-content flexrow flex-center flex-between">
-              <input type="text" name="system.lift" value="{{system.lift}}" data-dtype="Number"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    {{!-- Owned Status Tab --}}
+    <div class="tab status" data-group="primary" data-tab="status">
+      {{> "systems/BattleScarredVTT/templates/actor/parts/character-status.hbs" system=system}}
       <section class="abilities">
         {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
         use both the "grid" and "grid-Ncol" class where "N" can be any number
@@ -121,21 +36,29 @@
       </section>
     </div>
 
-    {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
+    {{!--Gear Tab --}}
+    <div class="tab gear" data-group="primary" data-tab="gear">
        {{> "systems/BattleScarredVTT/templates/actor/parts/actor-items.hbs"}}
     </div>
 
-    {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="spells">
+    {{!--Codex Tab --}}
+    <div class="tab codex" data-group="primary" data-tab="codex">
+       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-items.hbs"}}
+    </div>
+
+    {{!-- Perks Tab --}}
+    <div class="tab perks" data-group="primary" data-tab="perks">
       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-spells.hbs"}}
     </div>
 
-    {{!-- Active Effects Tab --}}
-    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+    {{!-- Bio Effects Tab --}}
+    <div class="tab bio flexcol" data-group="primary" data-tab="bio">
       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
     </div>
-
+    {{!-- Notes Effects Tab --}}
+    <div class="tab notes flexcol" data-group="primary" data-tab="notes">
+      {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
+    </div>
   </section>
 </form>
 

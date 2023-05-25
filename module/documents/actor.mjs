@@ -55,8 +55,33 @@ export class BattleScarredActor extends Actor {
 
     data.health.max = data.abilities[data.health.complement].mod * data.health.multiplier;
     data.aether.max = data.abilities[data.aether.complement].mod * data.aether.multiplier;
+
+    this._prepareArmorData(actorData);
+    this._prepareEncumbranceData(actorData);
+    this._prepareSpellData(actorData);
   }
 
+  _prepareArmorData(actorData) {
+    // Iterate over armor items and figure out mitigation and health
+    actorData.system.armorMitigation = 0;
+    actorData.system.armorHealth.value = 100;
+    actorData.system.armorHealth.max = 100;
+  }
+
+  // STR*5+END*5 = Equip Weight
+  _prepareEncumbranceData(actorData) {
+    const { str, end } = actorData.system.abilities;
+    actorData.system.carry = str.mod * 5 + end.mod * 5;
+
+    // sum up all carried item weight and divide it by carry
+    actorData.system.carriedWeight = 0;
+    actorData.system.encumbrance = this._encumbrance(actorData.system.carriedWeight, actorData.system.carry);
+    actorData.system.lift = actorData.system.carry * 2;
+  }
+
+  _prepareSpellData(actorData) {
+    actorData.system.codexSlots.value = 0;
+  }
   /**
    * Prepare NPC type specific data.
    */
@@ -101,4 +126,20 @@ export class BattleScarredActor extends Actor {
     // Process additional NPC data here.
   }
 
+  // Light 0-25%
+  // Med 26-60%
+  // Hev 61-80%
+  // Enc 81-100%
+  // Fuc 101%+
+  _encumbrance(carried, maxCarry) {
+    const percentage = (carried / maxCarry) * 100;
+
+    if (percentage === 0) return 'None';
+    if (percentage <= 26) return 'Light';
+    if (percentage <= 61) return 'Medium';
+    if (percentage <= 81) return 'Heavy';
+    if (percentage <= 100) return 'Encumbered';
+    return 'Fuuuuucked';
+  }
 }
+
