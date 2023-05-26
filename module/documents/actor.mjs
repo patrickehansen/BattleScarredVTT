@@ -53,8 +53,11 @@ export class BattleScarredActor extends Actor {
       ability.mod = Math.ceil(ability.value);
     }
 
+    // Calculate max health and aether.
     data.health.max = data.abilities[data.health.complement].mod * data.health.multiplier;
     data.aether.max = data.abilities[data.aether.complement].mod * data.aether.multiplier;
+    // For now, we have a hard cap at 30. Maybe there will be affects later.
+    data.action.max = 30;
 
     this._prepareArmorData(actorData);
     this._prepareEncumbranceData(actorData);
@@ -64,8 +67,10 @@ export class BattleScarredActor extends Actor {
   _prepareArmorData(actorData) {
     // Iterate over armor items and figure out mitigation and health
     actorData.system.armorMitigation = 0;
-    actorData.system.armorHealth.value = 100;
-    actorData.system.armorHealth.max = 100;
+    actorData.system.armorHealth = {
+      value : 100,
+      max : 100,
+    }
   }
 
   // STR*5+END*5 = Equip Weight
@@ -76,7 +81,7 @@ export class BattleScarredActor extends Actor {
     // sum up all carried item weight and divide it by carry
     actorData.system.carriedWeight = 0;
     actorData.system.encumbrance = this._encumbrance(actorData.system.carriedWeight, actorData.system.carry);
-    actorData.system.lift = actorData.system.carry * 2;
+    actorData.system.lift = this._lift(str.mod);
   }
 
   _prepareSpellData(actorData) {
@@ -141,5 +146,16 @@ export class BattleScarredActor extends Actor {
     if (percentage <= 100) return 'Encumbered';
     return 'Fuuuuucked';
   }
+
+  _lift(str) {  
+    const strength = typeof str === 'number' ? str : Number(str);
+    const basic = strength * 8.1 * Math.pow(1.1, strength);
+
+    // Ceiling to nearest 20
+    return roundToNearestXWithOffset(basic, 20, 0);
+  }
 }
 
+function roundToNearestXWithOffset(number, increment, offset = 0) {
+  return Math.ceil((number - offset) / increment ) * increment + offset;
+}
