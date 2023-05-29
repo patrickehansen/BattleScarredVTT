@@ -12,6 +12,9 @@
     <a class="item" data-tab="perks">Perks</a>
     <a class="item" data-tab="bio">Bio</a>
     <a class="item" data-tab="notes">Notes</a>
+    {{#if isGM}}
+      <a class="item" data-tab="notes">GM</a>
+    {{/if}}
   </nav>
 
   {{!-- Sheet Body --}}
@@ -57,6 +60,10 @@
     </div>
     {{!-- Notes Effects Tab --}}
     <div class="tab notes flexcol" data-group="primary" data-tab="notes">
+      {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+    {{!-- GMs Tab --}}
+    <div class="tab gm flexcol" data-group="primary" data-tab="gm">
       {{> "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs"}}
     </div>
   </section>

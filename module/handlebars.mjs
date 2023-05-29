@@ -9,13 +9,11 @@ export const helpers = {
     }
     return outStr;
   },
-  'toLowerCase' : function(str) {
-    return str.toLowerCase();
-  },
-  'switchAbilityLabelClass': (type, ...params) => {
-    return new Handlebars.SafeString(`${type}Label ${params.slice(0, -1).join(' ')}`);
-  },
+  'toLowerCase' : (str) => str.toLowerCase(),
+  'switchAbilityLabelClass': (type, ...params) => Handlebars.SafeString(`${type}Label ${params.slice(0, -1).join(' ')}`),
   "json": (data) => {
     return Handlebars.SafeString(JSON.stringify(data));
-  }
+  },
+  "isDefined": (data) => data !== undefined,
+  "concatenate": (...params) => new Handlebars.SafeString(params.join(' '))
 }

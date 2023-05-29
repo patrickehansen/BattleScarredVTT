@@ -1,0 +1,20 @@
+{{#with resource}}
+<div class="{{className}}">
+  
+  <!-- Please see module/helpers/util.mjs for the full class name-->
+  <label for="{{valuePath}}" class="resource-label">Action Points</label>
+
+  {{#if (isDefined max)}}
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="Number"/>
+      <span> / </span>
+      <input type="text" name="{{maxPath}}" value="{{max}}" data-dtype="Number"/>
+    </div>
+  {{else}}
+    <div class="resource-content flexrow flex-center flex-between">
+      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="Number"/>
+    </div>  
+  {{/if}}
+  
+</div>
+{{/with}}

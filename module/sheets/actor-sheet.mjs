@@ -1,4 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { formatResourceForSheet } from '../helpers/utils.mjs';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -59,6 +60,7 @@ export class BattleScarredActorSheet extends ActorSheet {
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
     context.biography = await TextEditor.enrichHTML(actorData.system.biography, {async: true});
+    context.isGM = game.users.current.isGM;
 
     return context;
   }
@@ -92,6 +94,11 @@ export class BattleScarredActorSheet extends ActorSheet {
       } 
       return a;
     }, {});
+
+    context.resources = ['health', 'aether', 'action'].map((resource) => formatResourceForSheet(resource, context.system));
+    context.status = ['injuries', 'permanentInjuries', 'codexSlots', 'xp', 'money', 'armorMitigation', 'armorHealth', 'encumbrance', 'mulligan', 'carry', 'lift'].map(
+      (resource) => formatResourceForSheet(resource, context.system)
+    );
   }
 
   /**

@@ -105,41 +105,42 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell", "perk", "armor", "weapon", "deityGift"],
+    "types": ["item", "spell", "perk", "armor", "weapon", "deityGift"],
     "templates": {
       "base": {
         "description": ""
+      },
+      "carryable": {
+        "weight": 0
       }
     },
     "item": {
-      "templates": ["base"],
+      "templates": ["base", "carryable"],
       "quantity": 1,
-      "weight": 0,
-      "formula": "3d6 - @str.mod"
-    },
-    "feature": {
-      "templates": ["base"]
+      "weight": 0
     },
     "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
+      "templates": ["base"]
     },
     "perk": {
       "templates": ["base"],
       "type": "profession"
     },
     "armor": {
-      "templates": ["base"],
+      "templates": ["base", "carryable"],
       "location": "head",
-      "weight": 0,
-      "mitigation": 0
+      "mitigation": 0,
+      "health": {
+        "max": null,
+        "value": 0
+      }
     },
     "weapon": {
-      "templates": ["base"],
+      "templates": ["base", "carryable"],
       "type": "sword",
       "damage": "1d5",
-      "weight": 0,
-      "ap": 0
+      "hitFormula": "3d6 - @str.mod",
+      "damageFormula": "1d4 + @str.mod + #weapon.damage"
     },
     "deityGift": {
       "templates": ["base"]

@@ -13,8 +13,9 @@
     "systems/BattleScarredVTT/templates/actor/parts/actor-effects.hbs",
     "systems/BattleScarredVTT/templates/actor/parts/ability.hbs",
     "systems/BattleScarredVTT/templates/actor/parts/abilitySum.hbs",
-    "systems/BattleScarredVTT/templates/actor/parts/character-resources.hbs",
     "systems/BattleScarredVTT/templates/actor/parts/character-header.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/character-resources.hbs",
     "systems/BattleScarredVTT/templates/actor/parts/character-status.hbs",
+    "systems/BattleScarredVTT/templates/actor/parts/resource-container.hbs",
   ]);
 };
