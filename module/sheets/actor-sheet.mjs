@@ -96,9 +96,15 @@ export class BattleScarredActorSheet extends ActorSheet {
     }, {});
 
     context.resources = ['health', 'aether', 'action'].map((resource) => formatResourceForSheet(resource, context.system));
-    context.status = ['injuries', 'permanentInjuries', 'codexSlots', 'xp', 'money', 'armorMitigation', 'armorHealth', 'encumbrance', 'mulligan', 'carry', 'lift'].map(
+
+    context.status = [
+      ['injuries', 'permanentInjuries', 'codexSlots'],
+      ['xp', 'money'],
+      ['armorMitigation', 'armorHealth', 'encumbrance'],
+      ['mulligan', 'carry', 'lift'],
+    ].map(arr => arr.map(
       (resource) => formatResourceForSheet(resource, context.system)
-    );
+    ))
   }
 
   /**

@@ -1,86 +1,12 @@
 <section class="state">
   <div class="grid-4col grid">
-    <div class="resource-column">
-      <div class="resource-container resource flex-group-center">
-        <label for="system.injuries.value" class="resource-label">Injuries</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.injuries.value" value="{{system.injuries.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="text" name="system.injuries.max" value="{{system.injuries.max}}" data-dtype="Number"/>
-        </div>
+    {{#each status as | statusList |}}
+
+      <div class="resource-column">
+        {{#each statusList as | resource |}} 
+          {{> "systems/BattleScarredVTT/templates/actor/parts/resource-container.hbs" resource=resource }}
+        {{/each}}
       </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.permanentInjuries.value" class="resource-label">Permanent Injuries</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.permanentInjuries.value" value="{{system.permanentInjuries.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="text" name="system.permanentInjuries.max" value="{{system.permanentInjuries.max}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.codexSlots.value" class="resource-label">Codex Slots</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.codexSlots.value" value="{{system.codexSlots.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="text" name="system.codexSlots.max" value="{{system.codexSlots.max}}" data-dtype="Number"/>
-        </div>
-      </div>
-    </div>
-    <div class="resource-column">
-      <div class="resource-container resource flex-group-center">
-        <label for="system.xp" class="resource-label">XPs</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.xp" value="{{system.xp}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.money" class="resource-label">Money</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.money" value="{{system.money}}" data-dtype="Number"/>
-        </div>
-      </div>
-    </div>
-    <div class="resource-column">
-      <div class="resource-container resource flex-group-center">
-        <label for="system.armorMitigation" class="resource-label">Armor Mitigation</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.armorMitigation" value="{{system.armorMitigation}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.armorHealth.value" class="resource-label">Armor Health</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.armorHealth.value" value="{{system.armorHealth.value}}" data-dtype="Number"/>
-        <span> / </span>
-        <input type="text" name="system.armorHealth.max" value="{{system.armorHealth.max}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.encumbrance" class="resource-label">Encumbrance</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.encumbrance" value="{{system.encumbrance}}" data-dtype="Number"/>
-        </div>
-      </div>
-    </div>
-    <div class="resource-column">
-      <div class="resource-container resource flex-group-center">
-        <label for="system.mulligan" class="resource-label">Mulligan</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.mulligan" value="{{system.mulligan}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.carry" class="resource-label">Carry</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.carry" value="{{system.carry}}" data-dtype="Number"/>
-        </div>
-      </div>
-      <div class="resource-container resource flex-group-center">
-        <label for="system.lift" class="resource-label">Lift</label>
-        <div class="resource-content flexrow flex-center flex-between">
-        <input type="text" name="system.lift" value="{{system.lift}}" data-dtype="Number"/>
-        </div>
-      </div>
-    </div>
+    {{/each}}
   </div>
 </section>
