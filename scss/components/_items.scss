@@ -118,3 +118,111 @@
   flex: 0 0 200px;
   padding: 0 8px;
 }
+
+.weapon-header {
+  .alternating {
+    .weapon-header-row:nth-child(even) {
+      background-color: rgba(171,171,171,0.4);
+    }
+
+    .weapon-header-row:nth-child(odd) {
+      background-color: rgba(187,187,187,0.4);
+    }
+  }
+  .weapon-header-row {
+    margin: 0 30px;
+    gap: 8px;
+    border-radius: 5px;
+
+    label {
+      font-size: 14px;
+      text-shadow: 2px 2px 3px grey;
+    }
+
+    input:focus {
+      box-shadow: 1px 1px 5px #9694ff;
+    }
+  }
+}
+
+
+.weapon-type {
+  font-size: 1.25em;
+}
+
+.weapon-attributes {
+
+  label.title {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-family: $font-primary;
+    text-decoration: underline;
+    text-shadow: 2px 2px 3px grey;
+  }
+
+  ul { 
+    list-style-type: none;
+  }
+
+  .basic-attribs {
+    display: flex;
+
+    .construction {
+      flex-grow: 3;
+    }
+
+    .physical {
+      flex-grow: 1;
+
+      .attribute {
+        gap: 5px;
+      }
+
+      .equip-button {
+        background-color: rgb(191, 191, 191);
+        padding: 2px 3px;
+        margin-left: 10px;
+        border-radius: 2px;
+      }
+
+      ul {
+        padding: 1px 3px;
+
+        li:nth-child(even) {
+          background-color: rgba(171,171,171,0.4);
+        }
+    
+        li:nth-child(odd) {
+          background-color: rgba(207, 207, 207,0.4);
+        }
+
+        li {
+          box-shadow: 2px 1px 2px black;
+          border-radius: 2px;
+          padding: 3px;
+          margin-top: 2px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .effect-attribs {
+    display: flex;
+
+    
+
+    .attribute {
+      gap: 5px;
+    }
+
+    .damage {
+
+    }
+
+    .special-effects {
+      flex-grow: 1;
+    }
+  }
+}

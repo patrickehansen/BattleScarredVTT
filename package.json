@@ -1,9 +1,9 @@
 {
-  "name": "battleScarredVTT",
+  "name": "battle-scarred-vtt",
   "version": "1.0.0",
   "description": "CSS compiler for the Battle Scarred VTT system",
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp build && vite build",
     "compile": "gulp css",
     "watch": "gulp",
     "gulp": "gulp"
@@ -15,9 +15,14 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "change-case": "^4.1.2",
     "gulp": "^4",
     "gulp-autoprefixer": "^8",
     "gulp-sass": "^4",
-    "gulp-sourcemaps": "^3"
+    "gulp-sourcemaps": "^3",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "vite": "^4.3.9"
   }
 }

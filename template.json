@@ -137,10 +137,16 @@
     },
     "weapon": {
       "templates": ["base", "carryable"],
-      "type": "sword",
-      "damage": "1d5",
-      "hitFormula": "3d6 - @str.mod",
-      "damageFormula": "1d4 + @str.mod + #weapon.damage"
+      "weaponType": "sword",
+      "damage": {
+        "dice": "1d5",
+        "bonus": "5"
+      },
+      "equipModes": [
+        "oneHand"
+      ],
+      "hitStat": "mel",
+      "range": 1
     },
     "deityGift": {
       "templates": ["base"]

@@ -1,5 +1,6 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
 import { formatResourceForSheet } from '../helpers/utils.mjs';
+import { pascalCase } from "change-case";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -12,10 +13,10 @@ export class BattleScarredActorSheet extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["BattleScarredVTT", "sheet", "actor"],
       template: "systems/BattleScarredVTT/templates/actor/actor-sheet.hbs",
-      width: 755,
+      width: 750,
       top: 200,
       left: 350,
-      height: 785,
+      height: 800,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }
@@ -43,15 +44,16 @@ export class BattleScarredActorSheet extends ActorSheet {
     context.flags = actorData.flags;
 
     // Prepare character data and items.
-    if (actorData.type == 'character') {
-      this._prepareItems(context);
-      this._prepareCharacterData(context);
-    }
+    this[`_get${pascalCase(actorData.type)}Data`]?.(context);
+    // if (actorData.type == 'character') {
+    //   this._prepareItems(context);
+    //   this._prepareCharacterData(context);
+    // }
 
-    // Prepare NPC data and items.
-    if (actorData.type == 'npc') {
-      this._prepareItems(context);
-    }
+    // // Prepare NPC data and items.
+    // if (actorData.type == 'npc') {
+    //   this._prepareItems(context);
+    // }
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
@@ -63,6 +65,15 @@ export class BattleScarredActorSheet extends ActorSheet {
     context.isGM = game.users.current.isGM;
 
     return context;
+  }
+
+  _getCharacterData(context) {
+    this._prepareItems(context);
+    this._prepareCharacterData(context);
+  }
+
+  _getNpcData(context) {
+    this._prepareItems(context);
   }
 
   /**

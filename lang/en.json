@@ -21,11 +21,14 @@
   "BATTLESCARREDVTT.AbilityEmpAbbr": "emp",
   "BATTLESCARREDVTT.AbilityAetAbbr": "aet",
 
-
   "BATTLESCARREDVTT.EffectCreate": "Create Effect",
   "BATTLESCARREDVTT.EffectToggle": "Toggle Effect",
   "BATTLESCARREDVTT.EffectEdit": "Edit Effect",
   "BATTLESCARREDVTT.EffectDelete": "Delete Effect",
+
+  "BATTLESCARREDVTT.EquipMode.OneHand": "One Hand",
+  "BATTLESCARREDVTT.EquipMode.TwoHand": "Two Hand",
+  "BATTLESCARREDVTT.EquipMode.OffHand": "Off Hand",
 
   "BATTLESCARREDVTT.Add": "Add"
 }

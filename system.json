@@ -6,7 +6,7 @@
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "9",
   "author": "Tiskahar",
-  "esmodules": ["module/battleScarredVTT.mjs"],
+  "esmodules": ["dist/battleScarredVTT.mjs"],
   "styles": ["css/battleScarredVTT.css"],
   "scripts": [],
   "packs": [],

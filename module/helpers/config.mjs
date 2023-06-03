@@ -36,3 +36,9 @@ BATTLESCARREDVTT.foobar = {
     "acc": "BATTLESCARREDVTT.AbilityAccAbbr",
   }
 };
+
+BATTLESCARREDVTT.equipModes = {
+  'oneHand': 'BATTLESCARREDVTT.EquipMode.OneHand',
+  'twoHand': 'BATTLESCARREDVTT.EquipMode.TwoHand',
+  'offHand': 'BATTLESCARREDVTT.EquipMode.OffHand',
+}

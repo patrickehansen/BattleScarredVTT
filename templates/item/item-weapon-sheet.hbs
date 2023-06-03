@@ -1,0 +1,108 @@
+{{!-- This template is a fallback for when items don't have more specific templates. --}}
+{{!-- Generally, you'll want to make more specific templates when possible. --}}
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="header-fields weapon-header">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="alternating">
+        <div class="weapon-header-row flexrow flex-group-center">
+          <label class="align-right">Weapon Type</label>
+          <input type="text" name="system.weaponType align-left" value="{{system.weaponType}}" data-dtype="Text"/>
+        </div>
+        <div class="weapon-header-row flexrow flex-group-center">
+          <label class="align-right">Repair Status</label>
+          <input type="text" name="system.repairStatus align-left" value="Sharp" data-dtype="Text"/>
+        </div>
+        <div class="weapon-header-row flexrow flex-group-center">
+          <label class="align-right">Magic Attunement</label>
+          <input type="text" name="system.magicAttunement align-left" value="Summoner" data-dtype="Text"/>
+        </div>
+      </div>
+      
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="description">Notes</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    {{!-- Attributes Tab --}}
+    <div class="tab attributes weapon-attributes" data-group="primary" data-tab="attributes">
+
+      <div class="basic-attribs">
+        <div class="construction">
+          <label class="title">Construction</label>
+          {{!-- TODO:: Reference --}}
+        </div>
+        <div class="physical">
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.weight" class="align-right" data-label="weight">Weight</label>
+            <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+          </div>
+
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.range" class="align-right" data-label="weight">Reach</label>
+            <input type="text" name="system.range" value="{{system.range}}" data-dtype="Number"/>
+          </div>
+
+          <div class="attribute equip-modes flexrow flex-group-center gridl">
+            <label class="align-right">Equip Modes</label>
+            <ul>
+            {{#each system.equipModes as | mode |}}
+              <li><span>{{mode.label}}</span>{{#if mode.equipped}}<span class="equip-button resource-label">O</span>{{/if}}</li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="effect-attribs">
+        <div class="damage">
+          <label class="title">Damage</label>
+
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.hitStat" class="flexlarge align-right" data-label="weight">Hit Skill</label>
+            <input type="text" name="system.dasf" value="{{system.hitStat}}" data-dtype="Text"/>
+          </div>
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.damage.dice" class="flexlarge align-right" data-label="weight">Dice</label>
+            <input type="text" name="system.damage.dice" value="{{system.damage.dice}}" data-dtype="Text"/>
+          </div>
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.damage.bonus" class="flexlarge align-right" data-label="weight">Bonus</label>
+            <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
+          </div>
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.damage.bonus" class="flexlarge align-right" data-label="weight">Repair Bonus</label>
+            <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
+          </div>
+          <div class="attribute flexrow flex-group-center gridl">
+            <label for="system.damage.bonus" class="flexlarge align-right" data-label="weight">Damage Skill</label>
+            <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
+          </div>
+
+        </div>
+        <div class="special-effects">
+          <label class="title">Special Effects</label>
+          <ul>
+            {{#each system.specialEffects as | effect |}}
+              <li>{{effect}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>								
+    </div>
+
+
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor data.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
+    </div>
+  </section>
+</form>

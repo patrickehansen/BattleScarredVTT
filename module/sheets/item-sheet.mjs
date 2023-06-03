@@ -1,3 +1,6 @@
+import {capitalize} from '../helpers/utils.mjs';
+import { capitalCase, pascalCase } from 'change-case';
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -9,8 +12,8 @@ export class BattleScarredItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["BattleScarredVTT", "sheet", "item"],
       width: 520,
-      height: 480,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      height: 520,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "attributes" }]
     });
   }
 
@@ -33,7 +36,7 @@ export class BattleScarredItemSheet extends ItemSheet {
     const context = super.getData();
 
     // Use a safe clone of the item data for further operations.
-    const itemData = context.item;
+    const itemData = structuredClone(this.item);
 
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
@@ -43,16 +46,26 @@ export class BattleScarredItemSheet extends ItemSheet {
     }
 
     // Add the actor's data to context.system for easier access, as well as flags.
-    context.data = itemData.system;
+    context.system = structuredClone(itemData.system);
     context.flags = itemData.flags;
 
     context.description = await TextEditor.enrichHTML(itemData.system.description, { async: true });
 
+    this[`_get${pascalCase(itemData.type)}Data`]?.(context);
+
     return context;
   }
 
-  /* -------------------------------------------- */
+  async _getWeaponData(context) {  
+    context.system.hitStat = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[context.system.hitStat]);
+    context.system.weaponType = capitalCase(context.system.weaponType);
+    context.system.equipModes = context.system.equipModes.map(v => ({
+      label: capitalCase(v),
+      equipped: false,
+    }));
+  }
 
+  /* -------------------------------------------- */
   /** @override */
   activateListeners(html) {
     //super.activateListeners(html);
