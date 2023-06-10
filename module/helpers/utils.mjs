@@ -1,6 +1,5 @@
 import { capitalCase } from 'change-case';
 
-
 /**
  * Format actor resources for display on the sheet
  * @param {string} resourceName name of the resource to be formatted
@@ -17,10 +16,6 @@ export function formatResourceForSheet(resourceName, system) {
     label: capitalCase(resourceName),
     valuePath: `system.${resourceName}${fetched?.value !== undefined ? '.value' : ''}`,
     maxPath: `system.${resourceName}.max`,
+    type: resourceName === 'Mulligan' ? "Text" : "Number"
   }
-}
-
-//TODO:: Convert to Capital Case 
-export function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
 }

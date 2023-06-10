@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "party"],
+    "types": ["character", "npc", "party", "characterAgain"],
     "templates": {
       "baseCharacter": {
         "health": {
@@ -102,7 +102,9 @@
     },
     "party": {
       "characters": []
-    }
+    },
+    "htmlFields": ["biography"],
+    "characterAgain": {}
   },
   "Item": {
     "types": ["item", "spell", "perk", "armor", "weapon", "deityGift"],
@@ -146,7 +148,10 @@
         "oneHand"
       ],
       "hitStat": "mel",
-      "range": 1
+      "dmgStat": "str",
+      "range": 1,
+      "repairBonus": 0,
+      "repairStatus": "edged"
     },
     "deityGift": {
       "templates": ["base"]

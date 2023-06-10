@@ -1,10 +1,8 @@
-{{!-- This template is a fallback for when items don't have more specific templates. --}}
-{{!-- Generally, you'll want to make more specific templates when possible. --}}
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields weapon-header">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <h1 class="charname"><input class="fancy" name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
       <div class="alternating">
         <div class="weapon-header-row flexrow flex-group-center">
           <label class="align-right">Weapon Type</label>
@@ -32,12 +30,12 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
     {{!-- Attributes Tab --}}
-    <div class="tab attributes weapon-attributes" data-group="primary" data-tab="attributes">
+    <div class="attributes weapon-attributes" data-group="primary" data-tab="attributes">
 
       <div class="basic-attribs">
         <div class="construction">
           <label class="title">Construction</label>
-          {{!-- TODO:: Reference --}}
+          {{!-- TODO:: Reference the recipe used to create this item and materials used --}}
         </div>
         <div class="physical">
           <div class="attribute flexrow flex-group-center gridl">
@@ -54,7 +52,14 @@
             <label class="align-right">Equip Modes</label>
             <ul>
             {{#each system.equipModes as | mode |}}
-              <li><span>{{mode.label}}</span>{{#if mode.equipped}}<span class="equip-button resource-label">O</span>{{/if}}</li>
+              <li>
+                <span>{{mode.label}}</span>
+                {{#if mode.equipped}}
+                  <span class="equip-button resource-label">
+                    O
+                  </span>
+                {{/if}}
+              </li>
             {{/each}}
             </ul>
           </div>
@@ -67,7 +72,7 @@
 
           <div class="attribute flexrow flex-group-center gridl">
             <label for="system.hitStat" class="flexlarge align-right" data-label="weight">Hit Skill</label>
-            <input type="text" name="system.dasf" value="{{system.hitStat}}" data-dtype="Text"/>
+            <input type="text" class="rollable" name="system.hitStat" value="{{system.hitStat}}" data-dtype="Text"/>
           </div>
           <div class="attribute flexrow flex-group-center gridl">
             <label for="system.damage.dice" class="flexlarge align-right" data-label="weight">Dice</label>
@@ -78,12 +83,12 @@
             <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
           </div>
           <div class="attribute flexrow flex-group-center gridl">
-            <label for="system.damage.bonus" class="flexlarge align-right" data-label="weight">Repair Bonus</label>
-            <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
+            <label for="system.damage.repairBonus" class="flexlarge align-right" data-label="weight">Repair Bonus</label>
+            <input type="text" name="system.damage.repairBonus" value="{{system.damage.repairBonus}}" data-dtype="Number"/>
           </div>
           <div class="attribute flexrow flex-group-center gridl">
-            <label for="system.damage.bonus" class="flexlarge align-right" data-label="weight">Damage Skill</label>
-            <input type="text" name="system.damage.bonus" value="{{system.damage.bonus}}" data-dtype="Number"/>
+            <label for="system.damage.damageSkill" class="flexlarge align-right" data-label="weight">Damage Skill</label>
+            <input type="text" name="system.damage.damageSkill" value="{{system.damage.damageSkill}}" data-dtype="Number"/>
           </div>
 
         </div>
@@ -97,8 +102,6 @@
         </div>
       </div>								
     </div>
-
-
 
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">

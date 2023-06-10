@@ -17,6 +17,11 @@
 .BattleScarredVTT {
   font-family: $font-secondary;
 
+  
+  .fancy {
+    font-family: $font-primary;
+  }
+
   @import 'components/charSheet';
   @import 'components/forms';
   @import 'components/resource';

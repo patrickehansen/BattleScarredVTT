@@ -6,13 +6,13 @@
 
   {{#if (isDefined max)}}
     <div class="resource-content flexrow flex-center flex-between">
-      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="Number"/>
+      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="{{type}}"/>
       <span> / </span>
-      <input type="text" name="{{maxPath}}" value="{{max}}" data-dtype="Number"/>
+      <input type="text" name="{{maxPath}}" value="{{max}}" data-dtype="{{type}}"/>
     </div>
   {{else}}
     <div class="resource-content flexrow flex-center flex-between">
-      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="Number"/>
+      <input type="text" name="{{valuePath}}" value="{{value}}" data-dtype="{{type}}"/>
     </div>  
   {{/if}}
   

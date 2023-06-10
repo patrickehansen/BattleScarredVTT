@@ -1,13 +1,17 @@
 // Import document classes.
 import { BattleScarredActor } from "./documents/actor.mjs";
 import { BattleScarredItem } from "./documents/item.mjs";
+import { BattleScarredWeapon } from "./documents/items/weapon.mjs";
 // Import sheet classes.
 import { BattleScarredActorSheet } from "./sheets/actor-sheet.mjs";
 import { BattleScarredItemSheet } from "./sheets/item-sheet.mjs";
+import { BattleScarredWeaponSheet } from "./sheets/items/weapon-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { BATTLESCARREDVTT } from "./helpers/config.mjs";
 import { helpers } from "./handlebars.mjs";
+
+import { CharacterData } from "./dataModels/character.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -17,8 +21,9 @@ Hooks.once('init', async function() {
   // accessible in global contexts.
   game.BattleScarredVTT = {
     BattleScarredActor,
+    BattleScarredWeapon,
     BattleScarredItem,
-    rollItemMacro
+    rollItemMacro,
   };
 
   // Add custom constants for configuration.
@@ -35,13 +40,23 @@ Hooks.once('init', async function() {
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = BattleScarredActor;
+  CONFIG.Weapon.documentClass = BattleScarredWeapon;
   CONFIG.Item.documentClass = BattleScarredItem;
+  CONFIG.Actor.systemDataModels.characterAgain = CharacterData;
 
   // Register sheet application classes
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("BattleScarredVTT", BattleScarredActorSheet, { makeDefault: true });
+  // Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("BattleScarredVTT", BattleScarredActorSheet, {
+    types: ["character", "npc"],
+    makeDefault: true,
+  });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("BattleScarredVTT", BattleScarredItemSheet, { makeDefault: true });
+  Items.registerSheet("BattleScarredVTT", BattleScarredWeaponSheet, { 
+    types: ["weapon"],
+    makeDefault: true,
+    label: "WeaponSheetDefault"
+  });
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();

@@ -233,6 +233,10 @@
   /* Example style for BattleScarred (can be removed if not needed) */
 }
 
+.BattleScarredVTT .fancy {
+  font-family: "MedievalSharp", sans-serif;
+}
+
 .BattleScarredVTT .header-fields .topHeader .labeledInput {
   display: -webkit-box;
   display: -ms-flexbox;
