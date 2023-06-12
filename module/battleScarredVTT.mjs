@@ -12,6 +12,7 @@ import { BATTLESCARREDVTT } from "./helpers/config.mjs";
 import { helpers } from "./handlebars.mjs";
 
 import { CharacterData } from "./dataModels/character.mjs";
+import { BattleScarredItemProxy } from "./documents/itemProxy.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -40,14 +41,13 @@ Hooks.once('init', async function() {
 
   // Define custom Document classes
   CONFIG.Actor.documentClass = BattleScarredActor;
-  CONFIG.Weapon.documentClass = BattleScarredWeapon;
-  CONFIG.Item.documentClass = BattleScarredItem;
+  CONFIG.Item.documentClass = BattleScarredItemProxy;
   CONFIG.Actor.systemDataModels.characterAgain = CharacterData;
 
   // Register sheet application classes
   // Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("BattleScarredVTT", BattleScarredActorSheet, {
-    types: ["character", "npc"],
+    types: ["character", "npc", "characterAgain"],
     makeDefault: true,
   });
   Items.unregisterSheet("core", ItemSheet);

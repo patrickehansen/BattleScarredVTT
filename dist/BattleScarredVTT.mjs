@@ -88,7 +88,7 @@ class h extends Actor {
 function E(r, e, t = 0) {
   return Math.ceil((r - t) / e) * e + t;
 }
-class f extends Item {
+class u extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -98,6 +98,7 @@ class f extends Item {
   getRollContext() {
     const e = this, t = ChatMessage.getSpeaker({ actor: this.actor }), a = game.settings.get("core", "rollMode"), s = `[${e.type}] ${e.name}`;
     return {
+      item: e,
       speaker: t,
       rollMode: a,
       defaultLabel: s
@@ -109,7 +110,12 @@ class f extends Item {
    * @private
    */
   async roll() {
-    const e = this, { speaker: t, rollMode: a, defaultLabel: s } = this.getRollContext();
+    const {
+      item: e,
+      speaker: t,
+      rollMode: a,
+      defaultLabel: s
+    } = this.getRollContext();
     if (!this.system.formula)
       ChatMessage.create({
         speaker: t,
@@ -118,12 +124,12 @@ class f extends Item {
         content: e.system.description ?? ""
       });
     else {
-      const i = this.getRollData(), l = new Roll(i.item.formula, i);
-      return roll.toMessage({
+      const i = this.getRollData();
+      return new Roll(i.item.formula, i).toMessage({
         speaker: t,
         rollMode: a,
         flavor: label ?? s
-      }), l;
+      }), rolls;
     }
   }
   /**
@@ -131,13 +137,14 @@ class f extends Item {
    * @private
    */
   getRollData() {
+    var t;
     if (!this.actor)
       return null;
     const e = this.actor.getRollData();
-    return Object.assign(e, e.abilities), e.item = foundry.utils.deepClone(this.system), e;
+    return Object.assign(e, e.abilities), e.item = foundry.utils.deepClone(this.system), (t = this[`_get${pascalCase(this.type)}RollData`]) == null || t.call(this, e), e;
   }
 }
-class b extends f {
+class g extends u {
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -236,23 +243,23 @@ function v(r) {
 var B = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g], L = /[^A-Z0-9]+/gi;
 function A(r, e) {
   e === void 0 && (e = {});
-  for (var t = e.splitRegexp, a = t === void 0 ? B : t, s = e.stripRegexp, i = s === void 0 ? L : s, l = e.transform, o = l === void 0 ? v : l, n = e.delimiter, R = n === void 0 ? " " : n, c = g(g(r, a, "$1\0$2"), i, "\0"), d = 0, p = c.length; c.charAt(d) === "\0"; )
-    d++;
-  for (; c.charAt(p - 1) === "\0"; )
-    p--;
-  return c.slice(d, p).split("\0").map(o).join(R);
+  for (var t = e.splitRegexp, a = t === void 0 ? B : t, s = e.stripRegexp, i = s === void 0 ? L : s, l = e.transform, o = l === void 0 ? v : l, n = e.delimiter, R = n === void 0 ? " " : n, c = b(b(r, a, "$1\0$2"), i, "\0"), p = 0, f = c.length; c.charAt(p) === "\0"; )
+    p++;
+  for (; c.charAt(f - 1) === "\0"; )
+    f--;
+  return c.slice(p, f).split("\0").map(o).join(R);
 }
-function g(r, e, t) {
+function b(r, e, t) {
   return e instanceof RegExp ? r.replace(e, t) : e.reduce(function(a, s) {
     return a.replace(s, t);
   }, r);
 }
-function V(r, e) {
+function w(r, e) {
   var t = r.charAt(0), a = r.substr(1).toLowerCase();
   return e > 0 && t >= "0" && t <= "9" ? "_" + t + a : "" + t.toUpperCase() + a;
 }
-function w(r, e) {
-  return e === void 0 && (e = {}), A(r, m({ delimiter: "", transform: V }, e));
+function V(r, e) {
+  return e === void 0 && (e = {}), A(r, m({ delimiter: "", transform: w }, e));
 }
 function _(r) {
   return r.charAt(0).toUpperCase() + r.substr(1);
@@ -278,7 +285,7 @@ function y(r, e) {
 class I extends ActorSheet {
   /** @override */
   static get defaultOptions() {
-    return console.log("hey this is the default options", super.defaultOptions), mergeObject(super.defaultOptions, {
+    return mergeObject(super.defaultOptions, {
       classes: ["BattleScarredVTT", "sheet", "actor"],
       template: "systems/BattleScarredVTT/templates/actor/actor-sheet.hbs",
       width: 750,
@@ -297,7 +304,7 @@ class I extends ActorSheet {
   async getData() {
     var a;
     const e = super.getData(), t = this.actor.toObject(!1);
-    return e.system = t.system, e.flags = t.flags, (a = this[`_get${w(t.type)}Data`]) == null || a.call(this, e), e.rollData = e.actor.getRollData(), e.effects = C(this.actor.effects), e.biography = await TextEditor.enrichHTML(t.system.biography, { async: !0 }), e.isGM = game.users.current.isGM, console.log("hey so this is a context", e), e;
+    return e.system = t.system, e.flags = t.flags, (a = this[`_get${V(t.type)}Data`]) == null || a.call(this, e), e.rollData = e.actor.getRollData(), e.effects = C(this.actor.effects), e.biography = await TextEditor.enrichHTML(t.system.biography, { async: !0 }), e.isGM = game.users.current.isGM, e;
   }
   _getCharacterData(e) {
     this._prepareItems(e), this._prepareCharacterData(e);
@@ -435,7 +442,7 @@ class S extends ItemSheet {
     e.find(".rollable").click(this._onRoll.bind(this)), this.isEditable;
   }
 }
-class O extends S {
+class k extends S {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -452,11 +459,11 @@ class O extends S {
   /* -------------------------------------------- */
   /** @override */
   async getData() {
-    const e = super.getData();
-    e.system.hitStat = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[e.system.hitStat]), e.system.weaponType = T(e.system.weaponType), e.system.equipModes = e.system.equipModes.map((t) => ({
+    const e = await super.getData();
+    return e.system.hitStat = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[e.system.hitStat]), e.system.weaponType = T(e.system.weaponType), e.system.equipModes = e.system.equipModes.map((t) => ({
       label: T(t),
       equipped: !1
-    }));
+    })), e;
   }
   /* -------------------------------------------- */
   /** @override */
@@ -470,7 +477,7 @@ class O extends S {
       return t.roll();
   }
 }
-const k = async function() {
+const O = async function() {
   return loadTemplates([
     // Actor partials.
     "systems/BattleScarredVTT/templates/actor/parts/actor-features.hbs",
@@ -484,12 +491,12 @@ const k = async function() {
     "systems/BattleScarredVTT/templates/actor/parts/character-status.hbs",
     "systems/BattleScarredVTT/templates/actor/parts/resource-container.hbs"
   ]);
-}, u = {};
-u.foobar = {
+}, d = {};
+d.foobar = {
   bas: "BATTLESCARREDVTT.bas",
   bar: "BATTLESCARREDVTT.bar"
 };
-u.abilities = {
+d.abilities = {
   names: {
     int: "BATTLESCARREDVTT.AbilityInt",
     res: "BATTLESCARREDVTT.AbilityRes",
@@ -515,7 +522,7 @@ u.abilities = {
     acc: "BATTLESCARREDVTT.AbilityAccAbbr"
   }
 };
-u.equipModes = {
+d.equipModes = {
   oneHand: "BATTLESCARREDVTT.EquipMode.OneHand",
   twoHand: "BATTLESCARREDVTT.EquipMode.TwoHand",
   offHand: "BATTLESCARREDVTT.EquipMode.OffHand"
@@ -533,7 +540,7 @@ const x = {
   isDefined: (r) => r !== void 0,
   concatenate: (...r) => new Handlebars.SafeString(r.join(" "))
 };
-class F extends foundry.abstract.DataModel {
+class F extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const e = foundry.data.fields;
     return {
@@ -562,31 +569,46 @@ class F extends foundry.abstract.DataModel {
     };
   }
 }
+const H = {
+  /**
+    * @param {typeof import("./item").BattleScarredItem}
+    * @param {unknown[]} args
+    */
+  construct(r, e) {
+    var t;
+    switch ((t = e[0]) == null ? void 0 : t.type) {
+      case "weapon":
+        return new g(...e);
+      default:
+        return new u(...e);
+    }
+  }
+}, j = new Proxy(u, H);
 Hooks.once("init", async function() {
   return game.BattleScarredVTT = {
     BattleScarredActor: h,
-    BattleScarredWeapon: b,
-    BattleScarredItem: f,
-    rollItemMacro: j
-  }, CONFIG.BATTLESCARREDVTT = u, CONFIG.Combat.initiative = {
+    BattleScarredWeapon: g,
+    BattleScarredItem: u,
+    rollItemMacro: q
+  }, CONFIG.BATTLESCARREDVTT = d, CONFIG.Combat.initiative = {
     formula: "1d20 + @abilities.dex.mod",
     decimals: 2
-  }, CONFIG.Actor.documentClass = h, CONFIG.Weapon.documentClass = b, CONFIG.Item.documentClass = f, CONFIG.Actor.systemDataModels.characterAgain = F, Actors.registerSheet("BattleScarredVTT", I, {
-    types: ["character", "npc"],
+  }, CONFIG.Actor.documentClass = h, CONFIG.Item.documentClass = j, CONFIG.Actor.systemDataModels.characterAgain = F, Actors.registerSheet("BattleScarredVTT", I, {
+    types: ["character", "npc", "characterAgain"],
     makeDefault: !0
-  }), Items.unregisterSheet("core", ItemSheet), Items.registerSheet("BattleScarredVTT", S, { makeDefault: !0 }), Items.registerSheet("BattleScarredVTT", O, {
+  }), Items.unregisterSheet("core", ItemSheet), Items.registerSheet("BattleScarredVTT", S, { makeDefault: !0 }), Items.registerSheet("BattleScarredVTT", k, {
     types: ["weapon"],
     makeDefault: !0,
     label: "WeaponSheetDefault"
-  }), k();
+  }), O();
 });
 Object.entries(x).forEach(([r, e]) => {
   Handlebars.registerHelper(r, e);
 });
 Hooks.once("ready", async function() {
-  Hooks.on("hotbarDrop", (r, e, t) => H(e, t));
+  Hooks.on("hotbarDrop", (r, e, t) => N(e, t));
 });
-async function H(r, e) {
+async function N(r, e) {
   if (r.type !== "Item")
     return;
   if (!("data" in r))
@@ -601,7 +623,7 @@ async function H(r, e) {
     flags: { "BattleScarredVTT.itemMacro": !0 }
   })), game.user.assignHotbarMacro(s, e), !1;
 }
-function j(r) {
+function q(r) {
   const e = ChatMessage.getSpeaker();
   let t;
   e.token && (t = game.actors.tokens[e.token]), t || (t = game.actors.get(e.actor));

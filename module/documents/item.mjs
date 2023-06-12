@@ -12,12 +12,7 @@ export class BattleScarredItem extends Item {
     super.prepareData();
   }
 
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async roll() {
+  getRollContext() { 
     const item = this;
 
     // Initialize chat data.
@@ -25,6 +20,27 @@ export class BattleScarredItem extends Item {
     const rollMode = game.settings.get('core', 'rollMode');
     const defaultLabel = `[${item.type}] ${item.name}`;
 
+    return {
+      item,
+      speaker,
+      rollMode,
+      defaultLabel,
+    }
+  }
+  
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async roll() {
+    const {
+      item,
+      speaker,
+      rollMode,
+      defaultLabel,
+    } = this.getRollContext();
+    
     // If there's no roll data, send a chat message.
     if (!this.system.formula) {
       ChatMessage.create({
@@ -33,38 +49,19 @@ export class BattleScarredItem extends Item {
         flavor: defaultLabel,
         content: item.system.description ?? ''
       });
-    }
-    // Otherwise, create a roll and send a chat message from it.
-    else {
+    } else {
       // Retrieve roll data.
       const rollData = this.getRollData();
-      const rolls = this[`_roll${pascalCase(this.type)}`]?.(rollData, defaultLabel) ?? [{ roll : new Roll(rollData.item.formula, rollData) }];
+      const roll = new Roll(rollData.item.formula, rollData);
 
-      // If you need to store the value first, uncomment the next line.
-      // let result = await roll.roll({async: true});
-      rolls.forEach(({roll, label}) => {
-        roll.toMessage({
-          speaker: speaker,
-          rollMode: rollMode,
-          flavor: label ?? defaultLabel,
-        });
-      })
-      
+      roll.toMessage({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label ?? defaultLabel,
+      });
+
       return rolls;
     }
-  }
-
-  _rollWeapon(rollData, defaultLabel) {
-    return [
-      {
-        roll: new Roll('3d6 - @hitStat', rollData),
-        label: `${defaultLabel} attack`,
-      },
-      {
-        roll: new Roll('@dice + @bonus', rollData),
-        label: `${defaultLabel} damage`,
-      }
-    ]
   }
 
   /**
@@ -82,25 +79,5 @@ export class BattleScarredItem extends Item {
     this[`_get${pascalCase(this.type)}RollData`]?.(rollData);
     
     return rollData;
-  }
-  
-  _getWeaponRollData(rollData) {
-    const { dice, bonus } = rollData?.item?.system.damage;
-    const equippedMode = rollData?.item?.system.equippedMode;
-
-    // We probably need to optional chain this up
-    const damageStat = rollData.abilities[rollData.item.system.dmgStat].mod;
-
-    // TODO:: refactor this architecture
-    const multiplier = equippedMode === 'twoHand' ? 2 : 1;
-
-    return {
-      // Value of stat used for hitting success evaluation
-      hitStat: rollData.abilities[rollData.item.system.damage.hitStat].mod,
-
-      // Damage assessment
-      dice: dice,
-      bonus: bonus + (damageStat * multiplier),
-    }
   }
 }

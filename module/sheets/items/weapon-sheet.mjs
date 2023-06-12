@@ -29,7 +29,7 @@ export class BattleScarredWeaponSheet extends BattleScarredItemSheet {
   /** @override */
   async getData() {
     // Retrieve base data structure.
-    const context = super.getData();
+    const context = await super.getData();
 
     // Use a safe clone of the item data for further operations.
     context.system.hitStat = game.i18n.localize(CONFIG.BATTLESCARREDVTT.abilities.names[context.system.hitStat]);
@@ -38,6 +38,8 @@ export class BattleScarredWeaponSheet extends BattleScarredItemSheet {
       label: capitalCase(v),
       equipped: false,
     }));
+
+    return context;
   }
 
   /* -------------------------------------------- */
